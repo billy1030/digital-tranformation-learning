@@ -99,19 +99,22 @@ flowchart TD
 > **圖 04.3：企業 AI 專案四象限篩選矩陣 (AI Project Prioritization Matrix)**
 
 ```mermaid
-quadrantChart
-    title AI 落地價值與可行性四象限
-    x-axis 低技術可行性 (Low Feasibility) --> 高技術可行性 (High Feasibility)
-    y-axis 低業務影響力 (Low Impact) --> 高業務影響力 (High Impact)
-    quadrant-1 立即推動 (No-Brainers)
-    quadrant-2 長期戰略孵化 (Strategic Explorations)
-    quadrant-3 避免浪費 (Discard)
-    quadrant-4 低成本自動化 (Easy Efficiency)
-    "企業內部智能知識庫 (RAG)": [0.85, 0.75]
-    "AI 輔助代碼與測試生成": [0.9, 0.8]
-    "全自動端到端財務關帳 Agent": [0.35, 0.9]
-    "AI 生成社群行銷草稿": [0.8, 0.4]
-    "毫無數據基礎的市場大預測": [0.2, 0.3]
+flowchart TD
+    subgraph Q1["第一象限：立即推動 (No-Brainers - 高價值、高可行)"]
+        A1["• 企業內部智能知識庫 (RAG)<br/>• AI 輔助編程與自動測試生成"]
+    end
+
+    subgraph Q2["第二象限：戰略孵化 (Strategic - 高價值、需攻堅)"]
+        A2["• 全自動端到端財務關帳 Agent<br/>• 核心供應鏈多模態需求預測"]
+    end
+
+    subgraph Q3["第三象限：低成本自動化 (Easy Efficiency)"]
+        A3["• AI 生成社群行銷草稿<br/>• 內部會議記錄自動摘要"]
+    end
+
+    subgraph Q4["第四象限：嚴格避免 (Discard - 低價值、高複雜)"]
+        A4["• 毫無數據基礎的市場大預測<br/>• 脫離業務場景的通用大模型自研"]
+    end
 ```
 
 > **📌 實戰個案剖析 (Case Study: 某跨國物流集團的專案四象限落地)**：
