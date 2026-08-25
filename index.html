@@ -557,6 +557,7 @@
           wrapper.className = 'mermaid-wrapper';
           
           // Header Bar with "手掌拖曳提示" + "放大檢視" button
+          // Header Bar with "滾輪縮放/拖曳開關掣" + "放大檢視" button
           const headerBar = document.createElement('div');
           headerBar.className = 'flex items-center justify-between mb-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-2';
           headerBar.innerHTML = `
@@ -565,9 +566,12 @@
                 圖 ${figureNumber}
               </span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
-              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="滾輪可放大縮小 • 按住滑鼠可 4 向拖曳 • 雙擊復位">
-                <i data-lucide="mouse" class="w-3 h-3 mr-1 text-sky-500"></i> 滾輪縮放 • 手掌拖曳
-              </span>
+              <button type="button" id="togglePanBtn_${diagramId}" onclick="toggleInteractiveMode('${diagramId}')" 
+                class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-lg border transition cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 shadow-sm" 
+                title="撳此掣開啟/關閉：滾輪縮放與 4 向手掌拖曳">
+                <i data-lucide="hand" class="w-3.5 h-3.5 mr-1 text-slate-400"></i>
+                <span class="btn-label">開啟手掌縮放/拖曳</span>
+              </button>
             </div>
             <button type="button" onclick="openZoomModal('${diagramId}', '圖 ${figureNumber}')" 
               class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-sky-50 hover:bg-sky-100 text-sky-700 dark:bg-sky-950 dark:hover:bg-sky-900 dark:text-sky-300 border border-sky-200 dark:border-sky-800 shadow-sm flex items-center transition cursor-pointer" 
@@ -576,11 +580,10 @@
             </button>
           `;
 
-          // Mermaid Container (支援滑鼠手掌抓取拖曳平移)
+          // Mermaid Container
           const container = document.createElement('div');
           container.className = 'mermaid-container';
           container.id = diagramId;
-          container.title = '按住滑鼠左鍵可左右拖動平移';
 
           const mermaidDiv = document.createElement('pre');
           mermaidDiv.className = 'mermaid';
@@ -598,14 +601,46 @@
         console.warn('Mermaid rendering warning:', e);
       }
 
-      // 在 Mermaid SVG 真正渲染完成後，為所有容器綁定 4 向拖曳與滑鼠滾輪縮放
+      // 初始化所有圖表的按鍵開關控制器
       document.querySelectorAll('.mermaid-container').forEach(container => {
-        enableDragToScroll(container);
+        setupInteractiveController(container);
       });
+      lucide.createIcons();
     }
 
-    // 🖐️ 全方位 4 向手掌抓取與滾輪自由縮放 (Pan & Mouse Wheel Zoom Engine)
-    function enableDragToScroll(container) {
+    // 狀態註冊表
+    const interactiveState = {};
+
+    function toggleInteractiveMode(diagramId) {
+      const container = document.getElementById(diagramId);
+      const btn = document.getElementById(`togglePanBtn_${diagramId}`);
+      if (!container || !btn) return;
+
+      const isEnabled = !interactiveState[diagramId];
+      interactiveState[diagramId] = isEnabled;
+
+      const label = btn.querySelector('.btn-label');
+      const icon = btn.querySelector('i');
+
+      if (isEnabled) {
+        btn.className = 'inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-lg border transition cursor-pointer bg-sky-500 text-white dark:bg-sky-600 border-sky-400 dark:border-sky-500 shadow-sm ring-2 ring-sky-300 dark:ring-sky-800 animate-pulse';
+        if (label) label.innerText = '🟢 已啟用：可滾輪縮放/拖曳 (雙擊復位)';
+        container.style.cursor = 'grab';
+        container.classList.add('pan-enabled');
+      } else {
+        btn.className = 'inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-lg border transition cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 shadow-sm';
+        if (label) label.innerText = '開啟手掌縮放/拖曳';
+        container.style.cursor = 'default';
+        container.classList.remove('pan-enabled');
+      }
+      lucide.createIcons();
+    }
+
+    // 🖐️ 全方位 4 向手掌抓取與滾輪自由縮放 (Pan & Mouse Wheel Zoom Engine - 由開關按鈕控制)
+    function setupInteractiveController(container) {
+      const diagramId = container.id;
+      interactiveState[diagramId] = false;
+
       let isDragging = false;
       let startX = 0;
       let startY = 0;
@@ -626,9 +661,9 @@
       }
 
       container.addEventListener('mousedown', (e) => {
+        if (!interactiveState[diagramId]) return;
         if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
         isDragging = true;
-        container.classList.add('is-dragging');
         startX = e.clientX - currentX;
         startY = e.clientY - currentY;
         container.style.cursor = 'grabbing';
@@ -637,20 +672,22 @@
       window.addEventListener('mouseup', () => {
         if (!isDragging) return;
         isDragging = false;
-        container.classList.remove('is-dragging');
-        container.style.cursor = 'grab';
+        if (interactiveState[diagramId]) {
+          container.style.cursor = 'grab';
+        }
       });
 
       window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
+        if (!isDragging || !interactiveState[diagramId]) return;
         e.preventDefault();
         currentX = e.clientX - startX;
         currentY = e.clientY - startY;
         updateTransform();
       });
 
-      // 🎡 滑鼠滾輪縮放 (Mouse Wheel Zoom)
+      // 🎡 滑鼠滾輪縮放 (只有撳咗開啟掣先會生效，避免正常頁面捲動被截斷)
       container.addEventListener('wheel', (e) => {
+        if (!interactiveState[diagramId]) return; // 未開啟時保持正常網頁捲動
         e.preventDefault();
         e.stopPropagation();
         const target = getTarget();
@@ -665,6 +702,7 @@
 
       // 雙擊復位
       container.addEventListener('dblclick', () => {
+        if (!interactiveState[diagramId]) return;
         currentX = 0;
         currentY = 0;
         currentScale = 1.0;
