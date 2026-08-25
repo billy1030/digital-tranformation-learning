@@ -13,14 +13,14 @@
 
 ```mermaid
 graph TD
-    subgraph 傳統 Legacy 架構 (僵化、脆弱)
+    subgraph S1["傳統 Legacy 架構 (僵化、脆弱)"]
         L1["單體巨石應用 (Monolithic Core)"]
         L2["本地自建機房 (On-Premises Data Center)"]
         L3["封閉數據庫 (Siloed RDBMS / Shadow Excel)"]
         L4["瀑布式長週期交付 (6-12 個月發布一次)"]
     end
 
-    subgraph 現代數位架構 (彈性、敏捷、可組合)
+    subgraph S2["現代數位架構 (彈性、敏捷、可組合)"]
         M1["微服務與事件驅動 (Microservices & Event-Driven)"]
         M2["混合多雲 / 雲原生 (Cloud-Native & Serverless)"]
         M3["現代數據湖倉與數據網格 (Lakehouse & Data Mesh)"]
@@ -46,24 +46,32 @@ graph TD
 
 ```mermaid
 flowchart LR
-    subgraph 企業核心能力 (APIs)
-        A1[用戶認證 API]
-        A2[支付與結算 API]
-        A3[即時庫存查詢 API]
-        A4[AI 智能推薦 API]
+    subgraph S3["企業核心能力 (APIs)"]
+        A1["用戶認證 API"]
+        A2["支付與結算 API"]
+        A3["即時庫存查詢 API"]
+        A4["AI 智能推薦 API"]
     end
 
-    subgraph 應用場景組裝 (Composability)
-        B1[行動 App]
-        B2[門市 POS 系統]
-        B3[第三方合作夥伴平台]
-        B4[AI Agent 智慧代理]
+    subgraph S4["應用場景組裝 (Composability)"]
+        B1["行動 App"]
+        B2["門市 POS 系統"]
+        B3["第三方合作夥伴平台"]
+        B4["AI Agent 智慧代理"]
     end
 
-    A1 --> B1 & B2 & B3 & B4
-    A2 --> B1 & B2 & B3
-    A3 --> B1 & B2 & B4
-    A4 --> B1 & B4
+    A1 --> B1
+    A1 --> B2
+    A1 --> B3
+    A1 --> B4
+    A2 --> B1
+    A2 --> B2
+    A2 --> B3
+    A3 --> B1
+    A3 --> B2
+    A3 --> B4
+    A4 --> B1
+    A4 --> B4
 ```
 
 > **📌 實戰個案剖析 (Case Study: Stripe 支付帝國的 API 優先戰略)**：

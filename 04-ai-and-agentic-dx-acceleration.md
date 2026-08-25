@@ -11,13 +11,13 @@
 
 ```mermaid
 graph TD
-    subgraph 傳統數位轉型 (傳統線性模式: 耗時 2-5 年)
+    subgraph S1["傳統數位轉型 (傳統線性模式: 耗時 2-5 年)"]
         T1["人工撰寫需求規格 (3-6 個月)"] --> T2["架構規劃與代碼手寫 (9-18 個月)"]
         T2 --> T3["手動測試與驗收 (3-6 個月)"]
         T3 --> T4["全公司員工培訓與適應 (6-12 個月)"]
     end
 
-    subgraph AI 加速數位轉型 (現代智能循環: 數週至數月)
+    subgraph S2["AI 加速數位轉型 (現代智能循環: 數週至數月)"]
         A1["AI 輔助需求梳理與規格生成 (數天)"] --> A2["AI 輔助編程與架構腳手架 (數週)"]
         A2 --> A3["自動化測試與 Synthetic 數據驗證 (持續實時)"]
         A3 --> A4["自然語言對話介面 & AI 輔助 Copilot (零學習曲線)"]
@@ -43,15 +43,15 @@ graph TD
 
 ```mermaid
 flowchart TD
-    subgraph 1. Foundation Models (基礎大模型)
+    subgraph K1["1. Foundation Models (基礎大模型)"]
         M["LLM / Multimodal Models<br/>(Gemini, Claude, GPT, Open-Source)"]
     end
 
-    subgraph 2. Knowledge Augmentation (企業知識增強)
+    subgraph K2["2. Knowledge Augmentation (企業知識增強)"]
         RAG["RAG 系統 & 向量資料庫<br/>(企業內部規章、合約、歷史工單、產品手冊)"]
     end
 
-    subgraph 3. Action & Execution (自主執行層)
+    subgraph K3["3. Action & Execution (自主執行層)"]
         AGENT["AI Agents & Tool Use<br/>(調用 CRM API, 執行 SQL, 發送郵件, 自動審批)"]
     end
 

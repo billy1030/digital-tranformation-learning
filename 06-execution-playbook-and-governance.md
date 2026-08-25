@@ -49,11 +49,11 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph 軌道 1: 產品與業務探索 (Discovery Track - 驗證「做對的事」)
+    subgraph T1["軌道 1: 產品與業務探索 (Discovery Track - 驗證「做對的事」)"]
         D1["用戶調研 & 痛點梳理"] --> D2["原型設計 & 易用性測試"] --> D3["業務價值評估 & User Story 定義"]
     end
 
-    subgraph 軌道 2: 工程與技術交付 (Delivery Track - 確保「把事做好」)
+    subgraph T2["軌道 2: 工程與技術交付 (Delivery Track - 確保「把事做好」)"]
         E1["Sprint Planning (需求排程)"] --> E2["代碼編寫 & 系統整合"] --> E3["CI/CD 自動化發布與監控"]
     end
 

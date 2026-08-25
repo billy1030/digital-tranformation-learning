@@ -13,25 +13,30 @@ Gartner 提出的「組合式架構」是未來應對不確定市場的核心解
 
 ```mermaid
 flowchart TD
-    subgraph 打包業務能力層 (Packaged Business Capabilities - PBCs)
+    subgraph S1["打包業務能力層 (Packaged Business Capabilities - PBCs)"]
         PBC1["客戶身分與畫像 PBC"]
         PBC2["即時動態定價 PBC"]
         PBC3["智慧物流與倉儲 PBC"]
         PBC4["多通路結算與支付 PBC"]
     end
 
-    subgraph 業務編排與智能代理層 (Agentic Orchestration Layer)
+    subgraph S2["業務編排與智能代理層 (Agentic Orchestration Layer)"]
         ORCH["AI Agent 智能工作流編排器<br/>(動態監控市場供需，自動組合 PBCs 生成新產品)"]
     end
 
-    subgraph 敏捷前台應用層 (Experience Frontends)
+    subgraph S3["敏捷前台應用層 (Experience Frontends)"]
         APP1["B2B 客戶專屬門戶"]
         APP2["智慧門市 AR/VR 終端"]
         APP3["第三方合作夥伴 API 生態"]
     end
 
-    PBC1 & PBC2 & PBC3 & PBC4 --> ORCH
-    ORCH --> APP1 & APP2 & APP3
+    PBC1 --> ORCH
+    PBC2 --> ORCH
+    PBC3 --> ORCH
+    PBC4 --> ORCH
+    ORCH --> APP1
+    ORCH --> APP2
+    ORCH --> APP3
 ```
 
 > **📌 實戰個案剖析 (Case Study: 快時尚巨頭 SHEIN 的 PBC 組合式即時供應鏈)**：

@@ -53,7 +53,7 @@
 
 ```mermaid
 graph TD
-    subgraph 🚨 十大致命反模式
+    subgraph S1["十大致命反模式 (Top 10 Anti-Patterns)"]
         A1["1. 科技炫技主義 (Tech for Tech's Sake)"]
         A2["2. 概念驗證黑洞 (PoC Purgatory)"]
         A3["3. 巨石系統推倒重來 (Big Bang Rewrite)"]
