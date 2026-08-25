@@ -49,16 +49,18 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph T1["軌道 1: 產品與業務探索 (Discovery Track - 驗證「做對的事」)"]
-        D1["用戶調研 & 痛點梳理"] --> D2["原型設計 & 易用性測試"] --> D3["業務價值評估 & User Story 定義"]
+    subgraph Track1["軌道 1: 產品與業務探索 (Discovery Track)"]
+        D1["用戶調研與痛點梳理"] --> D2["原型設計與易用性測試"]
+        D2 --> D3["業務價值評估與 User Story 定義"]
     end
 
-    subgraph T2["軌道 2: 工程與技術交付 (Delivery Track - 確保「把事做好」)"]
-        E1["Sprint Planning (需求排程)"] --> E2["代碼編寫 & 系統整合"] --> E3["CI/CD 自動化發布與監控"]
+    subgraph Track2["軌道 2: 工程與技術交付 (Delivery Track)"]
+        E1["Sprint Planning 需求排程"] --> E2["代碼編寫與系統整合"]
+        E2 --> E3["CI/CD 自動化發布與監控"]
     end
 
-    D3 -->|"已驗證的高價值需求"| E1
-    E3 -.->|"用戶真實使用數據回傳"| D1
+    D3 -->|"已驗證高價值需求"| E1
+    E3 -.->|"真實使用數據反饋"| D1
 ```
 
 > **📌 實戰個案剖析 (Case Study: Airbnb 雙軌敏捷推進體驗改版)**：
