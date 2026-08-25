@@ -45,33 +45,35 @@ graph TD
 > **圖 03.2：API 優先與多端場景組裝架構圖 (API Economy & Composability)**
 
 ```mermaid
-flowchart LR
-    subgraph S3["企業核心能力 (APIs)"]
-        A1["用戶認證 API"]
-        A2["支付與結算 API"]
-        A3["即時庫存查詢 API"]
-        A4["AI 智能推薦 API"]
+flowchart TD
+    subgraph S1["1. 企業核心能力資產 (Core Capability APIs)"]
+        direction LR
+        A1["🔐 用戶認證 API"]
+        A2["💳 支付結算 API"]
+        A3["📦 即時庫存 API"]
+        A4["🤖 AI 推薦 API"]
     end
 
-    subgraph S4["應用場景組裝 (Composability)"]
-        B1["行動 App"]
-        B2["門市 POS 系統"]
-        B3["第三方合作夥伴平台"]
-        B4["AI Agent 智慧代理"]
+    subgraph S2["2. 統一管理與治理層 (API Gateway & Management)"]
+        GW["🌐 企業級 API Gateway<br/>(安全鑑權 • 流量控管 • 監控計費 • 服務路由)"]
     end
 
-    A1 --> B1
-    A1 --> B2
-    A1 --> B3
-    A1 --> B4
-    A2 --> B1
-    A2 --> B2
-    A2 --> B3
-    A3 --> B1
-    A3 --> B2
-    A3 --> B4
-    A4 --> B1
-    A4 --> B4
+    subgraph S3["3. 多端場景靈活組裝 (Composable Frontends)"]
+        direction LR
+        B1["📱 行動 App"]
+        B2["🏬 門市 POS 終端"]
+        B3["🤝 第三方生態夥伴"]
+        B4["⚡ AI 智能代理 (Agent)"]
+    end
+
+    A1 --> GW
+    A2 --> GW
+    A3 --> GW
+    A4 --> GW
+    GW --> B1
+    GW --> B2
+    GW --> B3
+    GW --> B4
 ```
 
 > **📌 實戰個案剖析 (Case Study: Stripe 支付帝國的 API 優先戰略)**：
