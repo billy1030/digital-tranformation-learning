@@ -79,39 +79,66 @@
       border-left-color: #38bdf8;
       background: rgba(56, 189, 248, 0.08);
     }
+    .markdown-body .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+    .dark .markdown-body .table-wrapper {
+      border-color: rgba(51, 65, 85, 0.8);
+    }
     .markdown-body table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      margin: 1.5rem 0;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      font-size: 0.9rem;
-    }
-    .dark .markdown-body table {
-      border-color: rgba(51, 65, 85, 0.8);
+      margin: 0;
+      font-size: 0.92rem;
+      min-width: 650px;
     }
     .markdown-body th {
       background: #f8fafc;
       font-weight: 700;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.15rem;
       text-align: left;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+      border-bottom: 2px solid rgba(226, 232, 240, 0.9);
+      white-space: nowrap; /* 確保表頭標題不被隨意折行 */
+      color: #0369a1;
     }
     .dark .markdown-body th {
       background: #0f172a;
       border-color: rgba(51, 65, 85, 0.8);
+      color: #38bdf8;
+    }
+    /* 第一欄與第二欄重要關鍵欄位維持足夠寬度與重點強調 */
+    .markdown-body table td:first-child,
+    .markdown-body table th:first-child {
+      white-space: nowrap;
+      font-weight: 700;
+      min-width: 120px;
+    }
+    .markdown-body table th:nth-child(2),
+    .markdown-body table td:nth-child(2) {
+      min-width: 180px; /* 保證生活化比喻/第二欄有足夠寬敞空間 */
     }
     .markdown-body td {
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.15rem;
       border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+      line-height: 1.65;
     }
     .dark .markdown-body td {
       border-color: rgba(51, 65, 85, 0.5);
     }
     .markdown-body tr:last-child td {
       border-bottom: none;
+    }
+    .markdown-body tr:hover td {
+      background: rgba(2, 132, 199, 0.02);
+    }
+    .dark .markdown-body tr:hover td {
+      background: rgba(56, 189, 248, 0.03);
     }
     .markdown-body ul, .markdown-body ol {
       padding-left: 1.5rem;
@@ -432,7 +459,10 @@
       });
 
       // Parse Markdown with Marked
-      const html = marked.parse(markdownText);
+      let html = marked.parse(markdownText);
+      
+      // 自動將 table 包裹在 table-wrapper 中以確保寬度與滾動自適應
+      html = html.replace(/<table>/g, '<div class="table-wrapper"><table>').replace(/<\/table>/g, '</table></div>');
       contentArea.innerHTML = html;
 
       // Process Mermaid Diagrams
