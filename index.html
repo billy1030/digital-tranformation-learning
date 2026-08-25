@@ -79,54 +79,68 @@
       border-left-color: #38bdf8;
       background: rgba(56, 189, 248, 0.08);
     }
+    /* 🌟 精密表格排版引擎：重要欄位嚴格單行不換行，預留 15% 空間 */
     .markdown-body .table-wrapper {
       width: 100%;
       overflow-x: auto;
-      margin: 1.5rem 0;
-      border-radius: 0.75rem;
+      margin: 1.75rem 0;
+      border-radius: 0.85rem;
       border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
     .dark .markdown-body .table-wrapper {
       border-color: rgba(51, 65, 85, 0.8);
+      background: rgba(15, 23, 42, 0.6);
     }
     .markdown-body table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
       margin: 0;
-      font-size: 0.92rem;
-      min-width: 650px;
+      font-size: 0.93rem;
+      line-height: 1.6;
     }
     .markdown-body th {
-      background: #f8fafc;
+      background: #f1f5f9;
       font-weight: 700;
-      padding: 0.85rem 1.15rem;
+      padding: 0.85rem 1.25rem;
       text-align: left;
-      border-bottom: 2px solid rgba(226, 232, 240, 0.9);
-      white-space: nowrap; /* 確保表頭標題不被隨意折行 */
+      border-bottom: 2px solid rgba(203, 213, 225, 0.8);
+      white-space: nowrap !important; /* 表頭文字絕對單行不換行 */
       color: #0369a1;
+      letter-spacing: 0.01em;
     }
     .dark .markdown-body th {
       background: #0f172a;
-      border-color: rgba(51, 65, 85, 0.8);
+      border-color: rgba(51, 65, 85, 0.9);
       color: #38bdf8;
     }
-    /* 第一欄與第二欄重要關鍵欄位維持足夠寬度與重點強調 */
-    .markdown-body table td:first-child,
-    .markdown-body table th:first-child {
-      white-space: nowrap;
+
+    /* 關鍵欄位鎖定寬度與單行展示 */
+    .markdown-body table th:first-child,
+    .markdown-body table td:first-child {
+      white-space: nowrap !important; /* 第 1 欄核心 Key 絕對單行 */
       font-weight: 700;
-      min-width: 120px;
+      padding-right: 1.5rem;
+      color: #0284c7;
+      min-width: 130px;
     }
+    .dark .markdown-body table td:first-child {
+      color: #38bdf8;
+    }
+
+    /* 第 2 欄次要關鍵欄位（如難度、級別、短標籤等）若字數短則嚴格單行 */
     .markdown-body table th:nth-child(2),
     .markdown-body table td:nth-child(2) {
-      min-width: 180px; /* 保證生活化比喻/第二欄有足夠寬敞空間 */
+      padding-right: 1.5rem;
     }
-    .markdown-body td {
-      padding: 0.85rem 1.15rem;
+
+    /* 反模式表格與評估表格的前兩欄保護 */
+    .markdown-body table td {
+      padding: 0.85rem 1.25rem;
       border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-      line-height: 1.65;
+      vertical-align: middle;
     }
     .dark .markdown-body td {
       border-color: rgba(51, 65, 85, 0.5);
@@ -135,10 +149,10 @@
       border-bottom: none;
     }
     .markdown-body tr:hover td {
-      background: rgba(2, 132, 199, 0.02);
+      background: rgba(2, 132, 199, 0.03);
     }
     .dark .markdown-body tr:hover td {
-      background: rgba(56, 189, 248, 0.03);
+      background: rgba(56, 189, 248, 0.04);
     }
     .markdown-body ul, .markdown-body ol {
       padding-left: 1.5rem;
