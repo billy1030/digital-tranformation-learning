@@ -565,8 +565,8 @@
                 圖 ${figureNumber}
               </span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
-              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="按住滑鼠左鍵可任意左右平移拖動">
-                <i data-lucide="hand" class="w-3 h-3 mr-1 text-sky-500"></i> 按住手掌左右平移
+              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="按住滑鼠左鍵可任意上/下/左/右平移拖動，雙擊可復位">
+                <i data-lucide="hand" class="w-3 h-3 mr-1 text-sky-500"></i> 按住手掌任意平移
               </span>
             </div>
             <button type="button" onclick="openZoomModal('${diagramId}', '圖 ${figureNumber}')" 
@@ -602,35 +602,51 @@
       }
     }
 
-    // 🖐️ 手掌抓取與左右平移拖曳 (Drag to Scroll)
-    function enableDragToScroll(slider) {
-      let isDown = false;
-      let startX;
-      let scrollLeft;
+    // 🖐️ 全方位 4 向手掌抓取與拖曳平移 (Up, Down, Left, Right Pan Engine)
+    function enableDragToScroll(container) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let currentX = 0;
+      let currentY = 0;
 
-      slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.classList.add('is-dragging');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
+      const target = container.querySelector('pre') || container;
+      target.style.transition = 'transform 0.05s ease-out';
+      target.style.willChange = 'transform';
+      target.style.transformOrigin = 'center center';
+
+      container.addEventListener('mousedown', (e) => {
+        // 忽略點擊按鈕等行為
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+        isDragging = true;
+        container.classList.add('is-dragging');
+        startX = e.clientX - currentX;
+        startY = e.clientY - currentY;
+        container.style.cursor = 'grabbing';
       });
 
-      slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.classList.remove('is-dragging');
+      window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        container.classList.remove('is-dragging');
+        container.style.cursor = 'grab';
       });
 
-      slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.classList.remove('is-dragging');
-      });
-
-      slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
         e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5; // 拖動速度倍率
-        slider.scrollLeft = scrollLeft - walk;
+        currentX = e.clientX - startX;
+        currentY = e.clientY - startY;
+        target.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      });
+
+      // 雙擊復位
+      container.addEventListener('dblclick', () => {
+        currentX = 0;
+        currentY = 0;
+        target.style.transition = 'transform 0.25s ease-out';
+        target.style.transform = `translate(0px, 0px)`;
+        setTimeout(() => target.style.transition = 'transform 0.05s ease-out', 250);
       });
     }
 
