@@ -13,26 +13,26 @@
 
 ```mermaid
 flowchart TD
-    subgraph S1["🔴 傳統 Legacy 架構 (僵化、脆弱、高技術債)"]
-        direction TB
-        L1["🏢 地端機房 (On-Premises)"]
-        L2["📦 單體巨石應用 (Monolith)"]
-        L3["🔒 孤島關聯資料庫 (Silos)"]
-        L4["⏳ 瀑布交付 (6-12個月/次)"]
+    subgraph ROW1["🔴 傳統架構 (第一行：地端機房 • 單體應用 • 孤島數據 • 瀑布交付)"]
+        direction LR
+        L1["🏢 地端實體機房"]
+        L2["📦 單體巨石應用"]
+        L3["🔒 孤島關聯資料庫"]
+        L4["⏳ 瀑布長週期交付"]
     end
 
-    subgraph S2["🟢 現代雲原生架構 (彈性、敏捷、可組合)"]
-        direction TB
-        M1["☁️ 混合多雲 (Cloud-Native)"]
-        M2["🧩 微服務與事件驅動 (EDA)"]
-        M3["🌊 數據湖倉 (Lakehouse/Mesh)"]
-        M4["⚡ DevSecOps (每日多次發布)"]
+    subgraph ROW2["🟢 現代架構 (第二行：混合多雲 • 微服務 • 數據湖倉 • DevSecOps)"]
+        direction LR
+        M1["☁️ 混合多雲平台"]
+        M2["🧩 微服務事件驅動"]
+        M3["🌊 現代數據湖倉"]
+        M4["⚡ DevSecOps 自動化"]
     end
 
-    L1 -.->|"基礎設施上雲"| M1
-    L2 -.->|"架構微服務化"| M2
-    L3 -.->|"數據統一治理"| M3
-    L4 -.->|"流程自動化"| M4
+    L1 -->|"基礎設施上雲"| M1
+    L2 -->|"架構微服務化"| M2
+    L3 -->|"數據統一治理"| M3
+    L4 -->|"流程自動發布"| M4
 ```
 
 > **📌 實戰個案剖析 (Case Study: Netflix 雲原生與微服務架構轉型)**：
