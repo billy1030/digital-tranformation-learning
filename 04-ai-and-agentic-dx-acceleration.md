@@ -96,40 +96,26 @@ flowchart TD
 
 在推動 AI 專案時，應評估以下四個維度，避免落入「概念驗證黑洞 (PoC Purgatory)」：
 
-> **圖 04.3：企業 AI 專案四象限篩選矩陣 (AI Project Prioritization Matrix)**
+> **圖 04.3：企業 AI 專案落地四步篩選漏斗與決策路徑圖 (AI Project Evaluation Pipeline)**
 
 ```mermaid
 flowchart TD
-    subgraph TOP["業務影響力：高 (High Business Impact)"]
-        direction LR
-        subgraph Q1["🚀 第一象限：立即推動 (No-Brainers)<br/>【高業務價值 • 高技術可行性】"]
-            direction TB
-            A1["📚 企業內部智能知識庫 RAG<br/>• 內部規章/合約秒級查詢"]
-            A2["💻 AI 輔助編程與自動測試<br/>• 研發效率提升 40%~60%"]
-        end
+    START["💡 收集潛在 AI 業務需求"] --> S1{"1. 數據就緒度<br/>(是否有高質量真實數據？)"}
 
-        subgraph Q2["💎 第二象限：戰略孵化 (Strategic Bets)<br/>【高業務價值 • 低技術可行性/需攻堅】"]
-            direction TB
-            B1["🤖 端到端自動財務關帳 Agent<br/>• 需嚴密人機協同 (Human-in-the-loop)"]
-            B2["📈 核心供應鏈多模態需求預測<br/>• 需多源跨國時序數據整合"]
-        end
-    end
+    S1 -- "❌ 無可用數據" --> D4["🚫 第四象限：果斷叫停 (避免 PoC 黑洞)"]
+    S1 -- "✅ 數據就緒" --> S2{"2. 業務影響力<br/>(能顯著提升營收或省工時？)"}
 
-    subgraph BTM["業務影響力：低 (Low Business Impact)"]
-        direction LR
-        subgraph Q3["☕ 第三象限：低成本自動化 (Easy Efficiency)<br/>【低業務價值 • 高技術可行性】"]
-            direction TB
-            C1["✍️ AI 生成社群行銷草稿<br/>• 行銷人員一鍵潤飾發布"]
-            C2["📝 內部會議記錄自動摘要<br/>• 節省每日整理工時"]
-        end
+    S2 -- "低影響力" --> S3{"3. 技術門檻<br/>(現成 SaaS 即可解決？)"}
+    S3 -- "✅ 低門檻" --> D3["☕ 第三象限：低成本自動化 (員工自助 SaaS)"]
+    S3 -- "❌ 需自研" --> D4
 
-        subgraph Q4["🚫 第四象限：嚴格避免 (Discard / Pits)<br/>【低業務價值 • 低技術可行性】"]
-            direction TB
-            D1["🔮 毫無數據基礎的市場大預測<br/>• 典型 PoC 黑洞玩具專案"]
-            D2["🧱 脫離業務場景的通用大模型自研<br/>• 耗資數千萬且無法產生 ROI"]
-        end
-    end
+    S2 -- "🔥 高影響力" --> S4{"4. 技術可行性<br/>(架構是否健全、有 API 支援？)"}
+    S4 -- "✅ 高可行性" --> D1["🚀 第一象限：立即推動 (2-4 週 MVP 快速閉環)"]
+    S4 -- "⚠️ 需技術攻堅" --> D2["💎 第二象限：戰略孵化 (補齊底座、分步推進)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 某跨國物流集團的專案四象限落地)**：
+> 該集團果斷叫停了「毫無數據基礎的無人卡車大預測」玩具項目（第四象限），集中火力在 3 週內上線「報關單多模態 RAG 解析」（第一象限），通關文件處理效率提升 8 倍，當季為集團節省 1,500 萬報關延遲罰款。
 
 | 專案四象限類型 | 業務價值 (Impact) | 技術可行性 (Feasibility) | 落地決策建議 (Decision Playbook) | 推薦交付週期 |
 | :--- | :--- | :--- | :--- | :--- |
