@@ -15,7 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- 📦 Pre-bundled Offline Markdown Dataset (完全免 Fetch，100% 秒開穩定) -->
+  <!-- 📦 Pre-bundled Offline Markdown Dataset -->
   <script src="lessons-bundle.js"></script>
 
   <script>
@@ -140,7 +140,7 @@
       background: rgba(148, 163, 184, 0.2);
     }
 
-    /* 正確正常的 Mermaid 容器樣式 */
+    /* Mermaid 容器樣式 */
     .mermaid-wrapper {
       background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(226, 232, 240, 0.9);
@@ -166,6 +166,12 @@
       display: block;
       margin: 0 auto;
       height: auto !important;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
     }
 
     .glass-nav {
@@ -252,7 +258,7 @@
       </div>
     </aside>
 
-    <!-- Main Content Viewer (獨立捲動) -->
+    <!-- Main Content Viewer -->
     <main class="lg:col-span-8 xl:col-span-9 min-w-0">
       <div class="glass-nav rounded-2xl p-6 sm:p-8 shadow-sm border min-h-[700px] flex flex-col justify-between">
         
@@ -267,6 +273,53 @@
       </div>
     </main>
 
+  </div>
+
+  <!-- 🔍 互動式圖表放大檢視視窗 (Interactive Zoom Modal) -->
+  <div id="zoomModal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+    <div class="relative w-full max-w-5xl h-[85vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden">
+      
+      <!-- Modal Top Controls -->
+      <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950/60">
+        <div class="flex items-center space-x-2">
+          <span class="p-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400">
+            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+          </span>
+          <h3 class="font-bold text-sm text-slate-800 dark:text-slate-200" id="modalTitle">架構圖檢視器</h3>
+        </div>
+
+        <!-- 🔍 放大 / 縮小 / 重設 控制按鈕 -->
+        <div class="flex items-center space-x-1.5">
+          <button onclick="zoomModalContent(1.25)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center transition cursor-pointer" title="放大 (+25%)">
+            <i data-lucide="zoom-in" class="w-4 h-4 mr-1 text-sky-500"></i> 放大
+          </button>
+          <button onclick="zoomModalContent(0.8)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center transition cursor-pointer" title="縮小 (-20%)">
+            <i data-lucide="zoom-out" class="w-4 h-4 mr-1 text-sky-500"></i> 縮小
+          </button>
+          <button onclick="resetModalZoom()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center transition cursor-pointer" title="重設 (100%)">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 mr-1 text-slate-500"></i> 100%
+          </button>
+          <div class="h-4 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+          <button onclick="closeZoomModal()" class="p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition cursor-pointer" title="關閉 (Esc)">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Canvas (支援隨意手動放大、拖動與滾動) -->
+      <div class="flex-1 w-full overflow-auto bg-slate-100/50 dark:bg-slate-950/50 p-6 flex items-center justify-center" id="modalCanvas">
+        <div id="modalTarget" class="transition-transform duration-150 origin-center flex items-center justify-center">
+          <!-- Cloned SVG goes here -->
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-2.5 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between bg-slate-50 dark:bg-slate-950/60">
+        <span id="zoomScaleText" class="font-mono text-sky-600 dark:text-sky-400 font-bold">目前縮放: 100% (點擊上方按鈕手動放大)</span>
+        <span class="font-mono text-[11px]">按 ESC 鍵或點擊外部關閉</span>
+      </div>
+
+    </div>
   </div>
 
   <!-- 🚀 Floating Bottom-Right Navigation Bar (右下角懸浮導航欄) -->
@@ -304,8 +357,9 @@
     ];
 
     let currentIdx = 0;
+    let currentScale = 1.0;
 
-    // Mermaid 原生初始化 (不強制縮放，保持清晰字體與原始大小)
+    // Mermaid 原生初始化
     function setupMermaid() {
       const isDark = document.documentElement.classList.contains('dark');
       mermaid.initialize({
@@ -348,7 +402,7 @@
       const contentArea = document.getElementById('contentArea');
       let markdownText = '';
 
-      // 優先使用本地預打包 Bundle 數據 (零延遲、絕對唔會報 HTTP 錯誤)
+      // 優先使用本地預打包 Bundle 數據
       if (window.LESSONS_DATA && window.LESSONS_DATA[lesson.file]) {
         markdownText = window.LESSONS_DATA[lesson.file];
       } else {
@@ -393,7 +447,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Process & Render Mermaid Elements cleanly
+    // Process & Render Mermaid Elements with Zoom Action
     let diagramCounter = 0;
     async function processMermaidDiagrams() {
       const codeBlocks = document.querySelectorAll('#contentArea pre code');
@@ -413,13 +467,14 @@
           localChartIdx++;
           const currentLesson = LESSONS[currentIdx];
           const figureNumber = `${currentLesson.id}.${localChartIdx}`;
+          const diagramId = `mermaid-diag-${diagramCounter}`;
           const pre = block.parentElement;
 
           // Create Outer Wrapper
           const wrapper = document.createElement('div');
           wrapper.className = 'mermaid-wrapper';
           
-          // Header Bar on top
+          // Header Bar with "放大檢視" button
           const headerBar = document.createElement('div');
           headerBar.className = 'flex items-center justify-between mb-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-2';
           headerBar.innerHTML = `
@@ -429,11 +484,19 @@
               </span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
             </div>
+            <button type="button" onclick="openZoomModal('${diagramId}', '圖 ${figureNumber}')" 
+              class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-sky-50 hover:bg-sky-100 text-sky-700 dark:bg-sky-950 dark:hover:bg-sky-900 dark:text-sky-300 border border-sky-200 dark:border-sky-800 shadow-sm flex items-center transition cursor-pointer" 
+              title="開啟檢視器手動放大/縮小">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5 mr-1 text-sky-500"></i> 放大檢視
+            </button>
           `;
 
-          // Mermaid Container (自然寬度)
+          // Mermaid Container
           const container = document.createElement('div');
-          container.className = 'mermaid-container';
+          container.className = 'mermaid-container cursor-pointer';
+          container.id = diagramId;
+          container.title = '點擊開啟放大檢視器';
+          container.onclick = () => openZoomModal(diagramId, `圖 ${figureNumber}`);
 
           const mermaidDiv = document.createElement('pre');
           mermaidDiv.className = 'mermaid';
@@ -451,6 +514,75 @@
         console.warn('Mermaid rendering warning:', e);
       }
     }
+
+    // Modal Zoom Functions (一開始標準 100% 呈現，由使用者點擊 [+] 手動隨意放大)
+    function openZoomModal(diagramId, titleText) {
+      const container = document.getElementById(diagramId);
+      if (!container) return;
+
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      const modal = document.getElementById('zoomModal');
+      const target = document.getElementById('modalTarget');
+      const title = document.getElementById('modalTitle');
+      
+      title.innerText = `${titleText || '架構圖'} - 檢視器`;
+
+      // Clone SVG without artificial stretch
+      target.innerHTML = '';
+      const clonedSvg = svg.cloneNode(true);
+      clonedSvg.style.display = 'block';
+      clonedSvg.style.margin = '0 auto';
+      target.appendChild(clonedSvg);
+
+      // 一開始 100% 標準比例，絕不自動拉大或縮細
+      currentScale = 1.0;
+      updateModalScale();
+
+      // Show Modal
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+      lucide.createIcons();
+    }
+
+    function zoomModalContent(factor) {
+      currentScale = Math.max(0.4, Math.min(4.0, currentScale * factor));
+      updateModalScale();
+    }
+
+    function resetModalZoom() {
+      currentScale = 1.0;
+      updateModalScale();
+    }
+
+    function updateModalScale() {
+      const target = document.getElementById('modalTarget');
+      const scaleText = document.getElementById('zoomScaleText');
+      if (target) {
+        target.style.transform = `scale(${currentScale})`;
+      }
+      if (scaleText) {
+        scaleText.innerText = `目前縮放: ${Math.round(currentScale * 100)}% (點擊上方按鈕手動放大)`;
+      }
+    }
+
+    function closeZoomModal() {
+      const modal = document.getElementById('zoomModal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('modalTarget').innerHTML = '';
+      }, 200);
+    }
+
+    // Close on Escape or click outside
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeZoomModal();
+    });
+    document.getElementById('zoomModal').addEventListener('click', (e) => {
+      if (e.target.id === 'zoomModal' || e.target.id === 'modalCanvas') closeZoomModal();
+    });
 
     function navigateLesson(offset) {
       const newIdx = currentIdx + offset;
