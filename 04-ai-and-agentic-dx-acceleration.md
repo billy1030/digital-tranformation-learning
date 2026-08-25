@@ -100,20 +100,24 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph Q1["第一象限：立即推動 (No-Brainers - 高價值、高可行)"]
-        A1["• 企業內部智能知識庫 (RAG)<br/>• AI 輔助編程與自動測試生成"]
+    subgraph Q1["第一象限: 立即推動 (No-Brainers)"]
+        A1["企業內部智能知識庫 RAG"]
+        A2["AI 輔助編程與自動測試生成"]
     end
 
-    subgraph Q2["第二象限：戰略孵化 (Strategic - 高價值、需攻堅)"]
-        A2["• 全自動端到端財務關帳 Agent<br/>• 核心供應鏈多模態需求預測"]
+    subgraph Q2["第二象限: 戰略孵化 (Strategic)"]
+        B1["全自動端到端財務關帳 Agent"]
+        B2["核心供應鏈多模態需求預測"]
     end
 
-    subgraph Q3["第三象限：低成本自動化 (Easy Efficiency)"]
-        A3["• AI 生成社群行銷草稿<br/>• 內部會議記錄自動摘要"]
+    subgraph Q3["第三象限: 低成本自動化 (Easy Efficiency)"]
+        C1["AI 生成社群行銷草稿"]
+        C2["內部會議記錄自動摘要"]
     end
 
-    subgraph Q4["第四象限：嚴格避免 (Discard - 低價值、高複雜)"]
-        A4["• 毫無數據基礎的市場大預測<br/>• 脫離業務場景的通用大模型自研"]
+    subgraph Q4["第四象限: 嚴格避免 (Discard)"]
+        D1["毫無數據基礎的市場大預測"]
+        D2["脫離業務場景的通用大模型自研"]
     end
 ```
 
