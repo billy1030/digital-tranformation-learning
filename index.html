@@ -650,7 +650,47 @@
       });
     }
 
-    // Modal Zoom Functions (一開始標準 100% 呈現，由使用者點擊 [+] 手動隨意放大)
+    // Modal Zoom & Pan Engine (支援放大後的 4 向手掌自由拖曳與雙擊復位)
+    let modalPanX = 0;
+    let modalPanY = 0;
+    let isModalDragging = false;
+    let modalStartX = 0;
+    let modalStartY = 0;
+
+    function initModalPanEvents() {
+      const canvas = document.getElementById('modalCanvas');
+      const target = document.getElementById('modalTarget');
+      if (!canvas || !target) return;
+
+      canvas.style.cursor = 'grab';
+
+      canvas.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+        isModalDragging = true;
+        modalStartX = e.clientX - modalPanX;
+        modalStartY = e.clientY - modalPanY;
+        canvas.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!isModalDragging) return;
+        isModalDragging = false;
+        canvas.style.cursor = 'grab';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isModalDragging) return;
+        e.preventDefault();
+        modalPanX = e.clientX - modalStartX;
+        modalPanY = e.clientY - modalStartY;
+        updateModalScale();
+      });
+
+      canvas.addEventListener('dblclick', () => {
+        resetModalZoom();
+      });
+    }
+
     function openZoomModal(diagramId, titleText) {
       const container = document.getElementById(diagramId);
       if (!container) return;
@@ -662,17 +702,20 @@
       const target = document.getElementById('modalTarget');
       const title = document.getElementById('modalTitle');
       
-      title.innerText = `${titleText || '架構圖'} - 檢視器`;
+      title.innerText = `${titleText || '架構圖'} - 檢視器 (可按住手掌自由拖曳)`;
 
       // Clone SVG without artificial stretch
       target.innerHTML = '';
       const clonedSvg = svg.cloneNode(true);
       clonedSvg.style.display = 'block';
       clonedSvg.style.margin = '0 auto';
+      clonedSvg.style.pointerEvents = 'none'; // 避免選取
       target.appendChild(clonedSvg);
 
-      // 一開始 100% 標準比例，絕不自動拉大或縮細
+      // 一開始 100% 標準比例與置中
       currentScale = 1.0;
+      modalPanX = 0;
+      modalPanY = 0;
       updateModalScale();
 
       // Show Modal
@@ -688,6 +731,8 @@
 
     function resetModalZoom() {
       currentScale = 1.0;
+      modalPanX = 0;
+      modalPanY = 0;
       updateModalScale();
     }
 
@@ -695,10 +740,10 @@
       const target = document.getElementById('modalTarget');
       const scaleText = document.getElementById('zoomScaleText');
       if (target) {
-        target.style.transform = `scale(${currentScale})`;
+        target.style.transform = `translate(${modalPanX}px, ${modalPanY}px) scale(${currentScale})`;
       }
       if (scaleText) {
-        scaleText.innerText = `目前縮放: ${Math.round(currentScale * 100)}% (點擊上方按鈕手動放大)`;
+        scaleText.innerText = `目前縮放: ${Math.round(currentScale * 100)}% • 🖐️ 按住滑鼠可 4 向拖曳 • 雙擊復位`;
       }
     }
 
@@ -743,6 +788,7 @@
     }
 
     // Initial Load
+    initModalPanEvents();
     renderNav();
     loadLesson(0);
   </script>
