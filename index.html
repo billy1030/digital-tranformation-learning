@@ -211,7 +211,7 @@
       background: rgba(148, 163, 184, 0.2);
     }
 
-    /* Mermaid 容器樣式 */
+    /* Mermaid 容器樣式與自由拖曳手掌效果 (Grab & Drag) */
     .mermaid-wrapper {
       background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(226, 232, 240, 0.9);
@@ -231,12 +231,20 @@
       align-items: center;
       width: 100%;
       overflow-x: auto;
-      padding: 0.5rem 0;
+      padding: 0.75rem 0;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .mermaid-container:active,
+    .mermaid-container.is-dragging {
+      cursor: grabbing;
     }
     .mermaid-container svg {
       display: block;
       margin: 0 auto;
       height: auto !important;
+      pointer-events: none; /* 避免拖曳時選中文字 */
     }
 
     /* Modal Backdrop */
@@ -548,7 +556,7 @@
           const wrapper = document.createElement('div');
           wrapper.className = 'mermaid-wrapper';
           
-          // Header Bar with "放大檢視" button
+          // Header Bar with "手掌拖曳提示" + "放大檢視" button
           const headerBar = document.createElement('div');
           headerBar.className = 'flex items-center justify-between mb-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-2';
           headerBar.innerHTML = `
@@ -557,6 +565,9 @@
                 圖 ${figureNumber}
               </span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
+              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="按住滑鼠左鍵可任意左右平移拖動">
+                <i data-lucide="hand" class="w-3 h-3 mr-1 text-sky-500"></i> 按住手掌左右平移
+              </span>
             </div>
             <button type="button" onclick="openZoomModal('${diagramId}', '圖 ${figureNumber}')" 
               class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-sky-50 hover:bg-sky-100 text-sky-700 dark:bg-sky-950 dark:hover:bg-sky-900 dark:text-sky-300 border border-sky-200 dark:border-sky-800 shadow-sm flex items-center transition cursor-pointer" 
@@ -565,12 +576,11 @@
             </button>
           `;
 
-          // Mermaid Container
+          // Mermaid Container (支援滑鼠手掌抓取拖曳平移)
           const container = document.createElement('div');
-          container.className = 'mermaid-container cursor-pointer';
+          container.className = 'mermaid-container';
           container.id = diagramId;
-          container.title = '點擊開啟放大檢視器';
-          container.onclick = () => openZoomModal(diagramId, `圖 ${figureNumber}`);
+          container.title = '按住滑鼠左鍵可左右拖動平移';
 
           const mermaidDiv = document.createElement('pre');
           mermaidDiv.className = 'mermaid';
@@ -580,6 +590,9 @@
           wrapper.appendChild(headerBar);
           wrapper.appendChild(container);
           pre.replaceWith(wrapper);
+
+          // 綁定手掌拖曳 (Drag to Scroll) 事件
+          enableDragToScroll(container);
         }
       }
       try {
@@ -587,6 +600,38 @@
       } catch (e) {
         console.warn('Mermaid rendering warning:', e);
       }
+    }
+
+    // 🖐️ 手掌抓取與左右平移拖曳 (Drag to Scroll)
+    function enableDragToScroll(slider) {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('is-dragging');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('is-dragging');
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('is-dragging');
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5; // 拖動速度倍率
+        slider.scrollLeft = scrollLeft - walk;
+      });
     }
 
     // Modal Zoom Functions (一開始標準 100% 呈現，由使用者點擊 [+] 手動隨意放大)
