@@ -590,9 +590,6 @@
           wrapper.appendChild(headerBar);
           wrapper.appendChild(container);
           pre.replaceWith(wrapper);
-
-          // 綁定手掌拖曳 (Drag to Scroll) 事件
-          enableDragToScroll(container);
         }
       }
       try {
@@ -600,6 +597,11 @@
       } catch (e) {
         console.warn('Mermaid rendering warning:', e);
       }
+
+      // 在 Mermaid SVG 真正渲染完成後，為所有容器綁定 4 向拖曳與滑鼠滾輪縮放
+      document.querySelectorAll('.mermaid-container').forEach(container => {
+        enableDragToScroll(container);
+      });
     }
 
     // 🖐️ 全方位 4 向手掌抓取與滾輪自由縮放 (Pan & Mouse Wheel Zoom Engine)
@@ -611,17 +613,19 @@
       let currentY = 0;
       let currentScale = 1.0;
 
-      const target = container.querySelector('pre') || container;
-      target.style.transition = 'transform 0.05s ease-out';
-      target.style.willChange = 'transform';
-      target.style.transformOrigin = 'center center';
+      function getTarget() {
+        return container.querySelector('svg') || container.querySelector('pre') || container;
+      }
 
       function updateTransform() {
-        target.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+        const target = getTarget();
+        if (target) {
+          target.style.transformOrigin = 'center center';
+          target.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+        }
       }
 
       container.addEventListener('mousedown', (e) => {
-        // 忽略點擊按鈕等行為
         if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
         isDragging = true;
         container.classList.add('is-dragging');
@@ -648,11 +652,15 @@
       // 🎡 滑鼠滾輪縮放 (Mouse Wheel Zoom)
       container.addEventListener('wheel', (e) => {
         e.preventDefault();
-        const zoomDelta = e.deltaY < 0 ? 1.1 : 0.9;
-        currentScale = Math.max(0.4, Math.min(3.5, currentScale * zoomDelta));
-        target.style.transition = 'transform 0.1s ease-out';
+        e.stopPropagation();
+        const target = getTarget();
+        if (!target) return;
+        
+        const zoomDelta = e.deltaY < 0 ? 1.15 : 0.85;
+        currentScale = Math.max(0.3, Math.min(4.0, currentScale * zoomDelta));
+        target.style.transition = 'transform 0.08s ease-out';
         updateTransform();
-        setTimeout(() => target.style.transition = 'transform 0.05s ease-out', 100);
+        setTimeout(() => { if (target) target.style.transition = 'none'; }, 80);
       }, { passive: false });
 
       // 雙擊復位
@@ -660,9 +668,12 @@
         currentX = 0;
         currentY = 0;
         currentScale = 1.0;
-        target.style.transition = 'transform 0.25s ease-out';
-        updateTransform();
-        setTimeout(() => target.style.transition = 'transform 0.05s ease-out', 250);
+        const target = getTarget();
+        if (target) {
+          target.style.transition = 'transform 0.25s ease-out';
+          updateTransform();
+          setTimeout(() => { if (target) target.style.transition = 'none'; }, 250);
+        }
       });
     }
 
