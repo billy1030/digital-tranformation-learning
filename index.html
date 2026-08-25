@@ -32,52 +32,82 @@
     }
   </script>
   <style>
-    /* Custom Markdown Prose Styling */
+    /* Custom Markdown Prose Styling & Modern Typography */
     .markdown-body {
       color: inherit;
+      font-size: 1.05rem; /* 提升正文字體大小，閱讀更輕鬆 */
+      line-height: 1.8;
+      letter-spacing: 0.01em;
     }
     .markdown-body h1 {
-      font-size: 1.85rem;
+      font-size: 2.15rem;
       font-weight: 800;
       margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       color: #0369a1;
-      line-height: 1.25;
-      padding-bottom: 0.5rem;
+      line-height: 1.3;
+      padding-bottom: 0.75rem;
       border-bottom: 2px solid rgba(2, 132, 199, 0.2);
     }
     .dark .markdown-body h1 {
       color: #38bdf8;
-      border-bottom-color: rgba(56, 189, 248, 0.2);
+      border-bottom-color: rgba(56, 189, 248, 0.25);
     }
     .markdown-body h2 {
-      font-size: 1.35rem;
+      font-size: 1.55rem;
       font-weight: 700;
-      margin-top: 2rem;
+      margin-top: 2.25rem;
       margin-bottom: 1rem;
-      line-height: 1.3;
+      line-height: 1.35;
+      color: #0f172a;
+    }
+    .dark .markdown-body h2 {
+      color: #f1f5f9;
     }
     .markdown-body h3 {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
+      margin-top: 1.75rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.4;
     }
     .markdown-body p {
-      margin-bottom: 1rem;
-      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
     }
     .markdown-body blockquote {
       border-left: 4px solid #0284c7;
-      padding: 0.85rem 1.25rem;
-      margin: 1.25rem 0;
+      padding: 1rem 1.35rem;
+      margin: 1.5rem 0;
       background: rgba(2, 132, 199, 0.06);
-      border-radius: 0 0.75rem 0.75rem 0;
+      border-radius: 0 0.85rem 0.85rem 0;
       font-style: normal;
+      font-size: 1.02rem;
     }
     .dark .markdown-body blockquote {
       border-left-color: #38bdf8;
       background: rgba(56, 189, 248, 0.08);
+    }
+
+    /* 文本代碼塊 / 對比方框美化 */
+    .markdown-body pre:not(.mermaid) {
+      background: #f8fafc;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 0.85rem;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      font-family: '"Plus Jakarta Sans"', '"Noto Sans TC"', sans-serif;
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: #1e293b;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      overflow-x: auto;
+    }
+    .dark .markdown-body pre:not(.mermaid) {
+      background: #0f172a;
+      border-color: rgba(51, 65, 85, 0.8);
+      color: #e2e8f0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
     /* 🌟 精密表格排版引擎：重要欄位嚴格單行不換行，預留 15% 空間 */
     .markdown-body .table-wrapper {
@@ -289,8 +319,8 @@
   <!-- Main Container (使用寬度 95% 超寬滿版版面) -->
   <div class="flex-1 w-[95%] max-w-[96vw] mx-auto px-2 sm:px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-    <!-- 📌 Sidebar Navigation (獨立固定與捲動) -->
-    <aside class="lg:col-span-3 xl:col-span-2 lg:sticky lg:top-20 z-20">
+    <!-- 📌 Sidebar Navigation (寬度充裕，目錄文字完整展示) -->
+    <aside class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-20 z-20">
       <div class="glass-nav rounded-2xl p-3 sm:p-4 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar flex flex-col">
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-2 flex-shrink-0">課程模組目錄</h2>
         <nav class="space-y-1.5 flex-1" id="lessonList">
@@ -299,8 +329,8 @@
       </div>
     </aside>
 
-    <!-- Main Content Viewer (佔據右邊 95% 超大視野) -->
-    <main class="lg:col-span-9 xl:col-span-10 min-w-0">
+    <!-- Main Content Viewer (佔據右邊舒適閱讀視野) -->
+    <main class="lg:col-span-8 xl:col-span-9 min-w-0">
       <div class="glass-nav rounded-2xl p-6 sm:p-10 shadow-sm border min-h-[750px] flex flex-col justify-between">
         
         <!-- Markdown Body -->
