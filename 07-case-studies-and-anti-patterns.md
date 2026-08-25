@@ -53,33 +53,29 @@
 
 ```mermaid
 flowchart TD
-    ROOT["🚨 企業數位轉型十大致命反模式 (Anti-Patterns)"]
-
-    subgraph P1["🎯 戰略與商業維度 (Strategy & Value)"]
+    subgraph P1["🎯 1. 戰略與商業盲區 (Strategy & Value)"]
         direction TB
-        A1["1. 科技炫技主義 (Tech for Tech's Sake)<br/>• 脫離業務痛點，為 AI 而 AI"]
-        A2["2. 概念驗證黑洞 (PoC Purgatory)<br/>• 停留在 Demo 階段，永遠無法上線"]
-        A6["6. 缺乏高層擔當 (Lip-Service Sponsorship)<br/>• 口頭支持但拒絕調整組織 KPI"]
-        A10["10. 宣稱終點線 (Declaring Early Victory)<br/>• 誤把系統上線當作轉型成功"]
+        A1["• 1. 科技炫技主義 (脫離業務痛點，為 AI 而 AI)"]
+        A2["• 2. 概念驗證黑洞 (停留在 Demo，永遠無法上線)"]
+        A3["• 6. 缺乏高層擔當 (口頭支持但拒絕調整 KPI)"]
+        A4["• 10. 宣稱終點線 (誤把系統上線當作轉型成功)"]
     end
 
-    subgraph P2["👥 組織與文化維度 (People & Culture)"]
+    subgraph P2["👥 2. 組織與文化阻力 (People & Culture)"]
         direction TB
-        A4["4. 轉型靈魂外包 (Outsourced Soul)<br/>• 核心業務與產品思維完全依賴顧問"]
-        A7["7. 忽略一線操作者 (Ignoring Frontline)<br/>• 總部閉門造車，一線員工被迫抗拒"]
-        A8["8. 瀑布式偽敏捷 (Water-Scrum-Fall)<br/>• 披著敏捷外皮的長週期官僚審批"]
+        B1["• 4. 轉型靈魂外包 (核心業務與產品完全依賴顧問)"]
+        B2["• 7. 忽略一線操作者 (閉門造車導致員工強烈抗拒)"]
+        B3["• 8. 瀑布式偽敏捷 (披著敏捷外皮的長週期官僚審批)"]
     end
 
-    subgraph P3["⚙️ 架構與數據底座維度 (Tech & Data)"]
+    subgraph P3["⚙️ 3. 技術與數據債務 (Tech & Data)"]
         direction TB
-        A3["3. 巨石系統推倒重來 (Big Bang Rewrite)<br/>• 試圖一次重寫 15 年舊系統導致崩潰"]
-        A5["5. 數據垃圾場 (Garbage In, Chaos Out)<br/>• 未經數據治理直接硬套 AI 模型"]
-        A9["9. 忽視資安與合規 (Security Afterthought)<br/>• 上線後爆發數據外洩遭監管重罰"]
+        C1["• 3. 巨石系統推倒重來 (試圖一次重寫 15 年舊系統)"]
+        C2["• 5. 數據垃圾場 (未經數據治理直接硬套大模型)"]
+        C3["• 9. 忽視資安與合規 (上線後爆發數據洩漏遭重罰)"]
     end
 
-    ROOT --> P1
-    ROOT --> P2
-    ROOT --> P3
+    P1 --> P2 --> P3
 ```
 
 > **📌 實戰個案剖析 (Case Study: 柯達 Kodak 與 GE Digital 的血淚教訓)**：
