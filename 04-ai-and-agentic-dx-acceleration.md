@@ -7,6 +7,8 @@
 
 ## ⚡ 1. 傳統轉型 vs. AI 加速轉型的範式轉變 (Paradigm Shift)
 
+> **圖 04.1：傳統轉型線性交付 vs AI 智能加速循環對比圖 (Traditional DX vs AI-Accelerated DX)**
+
 ```mermaid
 graph TD
     subgraph 傳統數位轉型 (傳統線性模式: 耗時 2-5 年)
@@ -22,6 +24,9 @@ graph TD
     end
 ```
 
+> **📌 實戰個案剖析 (Case Study: 摩根士丹利 Morgan Stanley 的 AI 加速實踐)**：
+> 過去財務顧問需翻閱 10 萬份內部研報才能回答客戶複雜的理財問題。導入 GPT-4 驅動的內部 AI 助手後，顧問在通話中即時獲得精確研報摘要與合規建議，準備客戶方案的時間從 2 小時縮短至 2 分鐘。
+
 | 維度 | 傳統數位轉型模式 (Traditional DX) | AI 加速轉型模式 (AI-Driven DX) | 提速倍率 (Acceleration Impact) |
 | :--- | :--- | :--- | :--- |
 | **需求調研與流程梳理** | 顧問訪談、畫數百張 Visio 流程圖（數月） | AI 分析工作日誌/郵件/會議記錄，自動萃取業務流程圖與痛點 | **5x ~ 10x** |
@@ -33,6 +38,8 @@ graph TD
 ---
 
 ## 🧩 2. AI 提速的三大技術核心：GenAI, RAG 與 Agentic Workflows
+
+> **圖 04.2：大模型 + RAG 知識庫 + Agentic 工具調用閉環架構圖 (GenAI + RAG + Agentic Stack)**
 
 ```mermaid
 flowchart TD
@@ -52,6 +59,9 @@ flowchart TD
     M <--> AGENT
     AGENT --> OUT["端到端業務流程自動完成 (End-to-End Automation)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: Klarna 先買後付的 AI 客服 Agent)**：
+> Klarna 上線基於大模型與 API 調用的 AI 客服 Agent，一個月內處理了 230 萬次客服對話（相當於 700 名全職員工產能），將平均解決時間由 11 分鐘降至 2 分鐘內，同時客服滿意度維持與真人同等水準，為公司帶來 4,000 萬美元的年化利潤改善。
 
 ### 1. GenAI & LLMs (語意理解與生成能力)
 - 具備世界知識與強大的自然語言/代碼理解力，能將非結構化文字（如客戶投訴、招標書、法規條文）快速分類與摘要。
@@ -86,6 +96,8 @@ flowchart TD
 
 在推動 AI 專案時，應評估以下四個維度，避免落入「概念驗證黑洞 (PoC Purgatory)」：
 
+> **圖 04.3：企業 AI 專案四象限篩選矩陣 (AI Project Prioritization Matrix)**
+
 ```mermaid
 quadrantChart
     title AI 落地價值與可行性四象限
@@ -101,6 +113,9 @@ quadrantChart
     "AI 生成社群行銷草稿": [0.8, 0.4]
     "毫無數據基礎的市場大預測": [0.2, 0.3]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 某跨國物流集團的專案四象限落地)**：
+> 該集團果斷叫停了「毫無數據基礎的無人卡車大預測」玩具項目（象限 3），集中火力在 3 週內上線「報關單多模態 RAG 解析」（象限 1），通關文件處理效率提升 8 倍，當季為集團節省 1,500 萬報關延遲罰款。
 
 1. **Data Readiness (數據就緒度)**：是否有高質量的標準化資料作為 Ground Truth？
 2. **Tolerance for Error (容錯率評估)**：業務場景能否容忍微小幻覺？（行銷創意容錯率高；財務算帳容錯率極低，需加入 Human-in-the-loop 人機協同審批）。

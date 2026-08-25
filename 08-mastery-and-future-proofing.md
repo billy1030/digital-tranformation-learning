@@ -9,6 +9,8 @@
 
 Gartner 提出的「組合式架構」是未來應對不確定市場的核心解法：
 
+> **圖 08.1：組合式企業 PBC 模組化與智能編排架構圖 (Composable Enterprise & PBC Architecture)**
+
 ```mermaid
 flowchart TD
     subgraph 打包業務能力層 (Packaged Business Capabilities - PBCs)
@@ -32,6 +34,9 @@ flowchart TD
     ORCH --> APP1 & APP2 & APP3
 ```
 
+> **📌 實戰個案剖析 (Case Study: 快時尚巨頭 SHEIN 的 PBC 組合式即時供應鏈)**：
+> SHEIN 將「面料採購」、「打版設計」、「小批量生產（100件）」與「海外物流」全部封裝為獨立的微服務 API (PBCs)。演算法即時偵測 TikTok 熱門流行元素後，系統在 2 小時內自動組合調度供應鏈 PBCs 完成下單生產，7 天內送達歐美消費者手中，完美展現了組合式企業的極致彈性。
+
 ### 組合式企業的三大核心要素：
 1. **Composable Thinking (組合式思維)**：將所有業務流程拆解為獨立、可復用的微型能力模組。
 2. **Composable Business Architecture (組合式業務架構)**：定義清晰的 **PBC (Packaged Business Capabilities 打包業務能力)**，每個模組具備獨立 API 與數據契約。
@@ -43,15 +48,20 @@ flowchart TD
 
 隨著多智能體協同 (Multi-Agent Systems) 的成熟，企業正在由「人驅動軟體」轉向「AI 智能體自主協同，人類把關戰略」：
 
+> **圖 08.2：自主企業感知-決策-執行-學習智能閉環圖 (The Autonomous Enterprise Loop)**
+
 ```mermaid
 graph TD
     A["感知層 (Perception)<br/>- IoT 感測器、市場輿情爬蟲、即時營運指標即時監控"]
     B["認知與決策層 (Reasoning & Decision)<br/>- 多智能體群 (Multi-Agent Swarm) 模擬多種情境，計算最佳方案"]
     C["執行層 (Autonomous Action)<br/>- 自動調用 API 調整供應鏈訂單、自動發布行銷活動、動態調度伺服器算力"]
     D["反饋與學習層 (Reinforcement Learning)<br/>- 根據實際業務回饋，持續微調底層模型與決策策略"]
-
+    
     A --> B --> C --> D --> A
 ```
+
+> **📌 實戰個案剖析 (Case Study: 特斯拉 Tesla 智慧工廠與端到端自主運作)**：
+> 特斯拉超級工廠將生產線機器人、零件供應商與車載遙測數據聯網，演算法即時感知某個螺絲扭矩異常時，會自動調度維護機器人、通知零件商補貨，並同步 OTA 更新全球車隊韌體，人類工程師僅需在高階指揮中心監控戰略指標。
 
 ---
 

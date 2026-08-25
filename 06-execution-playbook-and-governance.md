@@ -7,12 +7,20 @@
 
 ## 🚀 1. 轉型落地實施四階段路線圖 (The 4-Phase Delivery Roadmap)
 
+> **圖 06.1：轉型專案四階段落地交付全景圖 (The 4-Phase Delivery Roadmap)**
+
 ```mermaid
 flowchart LR
     P1["階段一: 探索與驗證<br/>(Discover & PoC)<br/>📅 2-4 週"] --> P2["階段二: 最小可行產品<br/>(MVP Launch)<br/>📅 6-8 週"]
     P2 --> P3["階段三: 試點與擴展<br/>(Pilot & Scale)<br/>📅 3-6 個月"]
     P3 --> P4["階段四: 規模化與常態運營<br/>(Enterprise Rollout)<br/>📅 持續演進"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 宜家 IKEA 的 AR 家居四階段落地)**：
+> 1. **PoC (3週)**：用 iPhone 簡單做個 3D 沙發投影 Demo 驗證空間比例。
+> 2. **MVP (6週)**：推出精簡版 App，僅收錄 100 款熱銷家具提供 AR 擺放預覽。
+> 3. **Pilot (3個月)**：在瑞典與英國市場試點，收集百萬用戶反饋並打通庫存 API。
+> 4. **Scale (全球推廣)**：正式升級為 IKEA Kreativ 全球核心 App，用戶退貨率直接下降 25%。
 
 ### 各階段關鍵任務清單：
 1. **階段一：探索與概念驗證 (Discover & PoC)**
@@ -37,6 +45,8 @@ flowchart LR
 
 為了避免「只顧埋頭開發卻偏離業務需求」，團隊應採用「探索軌 (Discovery Track)」與「交付軌 (Delivery Track)」並行的雙軌敏捷機制：
 
+> **圖 06.2：雙軌敏捷探索與工程交付閉環流程圖 (Dual-Track Agile Loop)**
+
 ```mermaid
 flowchart TD
     subgraph 軌道 1: 產品與業務探索 (Discovery Track - 驗證「做對的事」)
@@ -51,11 +61,16 @@ flowchart TD
     E3 -.->|"用戶真實使用數據回傳"| D1
 ```
 
+> **📌 實戰個案剖析 (Case Study: Airbnb 雙軌敏捷推進體驗改版)**：
+> Airbnb 的產品團隊在「探索軌」中每週快速利用 Figma 原型訪談 20 位房東，淘汰了 80% 偽需求；只有真正經過易用性驗證的高價值功能，才會進入「交付軌」交由工程師編寫代碼，避免了數千小時的無效開發浪費。
+
 ---
 
 ## 🛡️ 3. 企業級轉型治理與風險控制體系 (Enterprise Governance Framework)
 
 建立跨部門的「數位轉型治理委員會 (Transformation Steering Committee)」，建立三大核心防線：
+
+> **圖 06.3：數位轉型三道防線治理架構圖 (Three Lines of Defense Governance)**
 
 ```mermaid
 graph TD
@@ -68,6 +83,9 @@ graph TD
     G2 --> G21["- 資料脫敏與訪問權限最小化 (RBAC)<br/>- 嚴防 Prompt Injection 與模型越獄<br/>- 審計日誌留存與合規追溯 (Audit Trail)"]
     G3 --> G31["- 階段性撥款 (Stage-Gate Funding)<br/>- 每季審查 OKRs 達成率與 ROI<br/>- 表現不佳項目果斷止損 (Fail-Fast)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 滙豐銀行 HSBC 的 Stage-Gate 治理)**：
+> 滙豐銀行對內部 AI 與轉型專案實施「分階段注資（Stage-Gate Funding）」。PoC 階段僅撥發 5 萬美元，若驗證通過並具備資安合規性才撥發 30 萬美元進入 MVP，每年為銀行淘汰超過 40 個低產出專案，將資金集中於最高回報的旗艦項目。
 
 ---
 

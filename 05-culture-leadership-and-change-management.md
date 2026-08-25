@@ -9,6 +9,8 @@
 
 任何重大技術或流程變革，員工心理都會經歷經典的「變革曲線 (Kubler-Ross Change Curve)」：
 
+> **圖 05.1：轉型變革心理歷程與應對曲線圖 (The DX Change Curve Journey)**
+
 ```mermaid
 journey
     title 員工在數位轉型中的心態變化歷程
@@ -27,16 +29,16 @@ journey
       轉型文化內化為企業 DNA: 5: 員工
 ```
 
-### 員工抗拒的核心原因：
-1. **Fear of Obsolescence (恐懼被取代)**：擔心自動化和 AI 會導致自己失業。
-2. **Loss of Control & Status (失去既有權力與舒適圈)**：原先依靠經驗或資訊不對稱建立的權威被數據透明化打破。
-3. **Cognitive Overload (認知超載與學習疲勞)**：在日常繁重業務之外還要學習新工具，感到不堪重負。
+> **📌 實戰個案剖析 (Case Study: 微軟 Microsoft 文化重塑歷程)**：
+> 薩蒂亞·納德拉 (Satya Nadella) 上任微軟 CEO 時，將微軟從「無所不知 (Know-it-all)」的內鬥文化，轉變為「無所不學 (Learn-it-all)」的成長型思維。管理層不再懲罰失敗的專案，而是獎勵快速學習與分享教訓，成功帶領微軟市值從 3,000 億美元飆升至 3 兆美元。
 
 ---
 
 ## 🛠️ 2. ADKAR 變革管理模型在 DX 的落地實踐
 
 企業應採用業界權威的 **Prosci ADKAR 模型**，按階段引導全員跨越心理門檻：
+
+> **圖 05.2：Prosci ADKAR 變革五階段落地圖 (ADKAR Change Framework)**
 
 ```mermaid
 flowchart LR
@@ -45,6 +47,12 @@ flowchart LR
     K --> AB["A - Ability<br/>(培養實踐能力)"]
     AB --> R["R - Reinforcement<br/>(強化維持成果)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 寶潔 P&G 全球供應鏈數位化 ADKAR 實踐)**：
+> P&G 推動全自動化供應鏈時：
+> - **Awareness & Desire**：CEO 親自拍影片說明「不數位化將失去零售巨頭訂單」，並設立節能創新大獎。
+> - **Knowledge & Ability**：舉辦「數位學院」，讓 5,000 名工廠主管完成為期 4 週的實戰培訓。
+> - **Reinforcement**：將供應鏈精準預測指標直接計入年終獎金，1 年內全美庫存缺貨率下降 40%。
 
 | 階段 | 目標 (Objective) | 關鍵行動 (Key Actions) | 衡量標準 (Success Metrics) |
 | :--- | :--- | :--- | :--- |
@@ -60,6 +68,8 @@ flowchart LR
 
 打破傳統依照職能劃分的「深井式部門（Siloed Org）」，轉向以商業價值交付為導向的跨職能小組（Squads）：
 
+> **圖 05.3：跨職能 Squad 小組角色與協同關係圖 (Agile Squad Class Diagram)**
+
 ```mermaid
 classDiagram
     class AgileSquad {
@@ -71,16 +81,16 @@ classDiagram
     }
 ```
 
-### 組織運作原則：
-- **Autonomous & Empowered (自主授權)**：Squad 擁有專案範圍內的決策權，無需層層上報批准。
-- **Shared Accountability (共同擔責)**：業務與技術人員共享同一個業務 OKR，不再出現「IT 說做完了但業務說沒用」的割裂現象。
-- **Co-Location (緊密協同)**：團隊成員物理或虛擬常態集中辦公，維持高頻溝通。
+> **📌 實戰個案剖析 (Case Study: 荷蘭 ING 銀行敏捷組織轉型)**：
+> ING 銀行取消了傳統的科層部門，將總部 2,500 名員工改組為 350 個跨職能 Squad。每個小組包含市場、風控、程式設計師，擁有完全自主權。轉型後產品上市時間縮短 60%，員工敬業度指標達到歷史新高。
 
 ---
 
 ## 🧠 4. 全員 AI 素養與賦能體系 (AI Literacy & Upskilling)
 
 推動「全員 AI 賦能計畫（AI for Everyone）」，依據層級打造三層金字塔式培訓：
+
+> **圖 05.4：三層金字塔全員 AI 素養培訓架構圖 (AI Literacy Pyramid)**
 
 ```mermaid
 graph TD
@@ -91,6 +101,9 @@ graph TD
     T1 --- T2
     T2 --- T3
 ```
+
+> **📌 實戰個案剖析 (Case Study: 亞馬遜 Amazon 的「Machine Learning University」)**：
+> 亞馬遜建立內部機器學習大學，任何人（包括物流倉管員與客服）都可以免費進修。已有超過 10 萬名非技術員工獲得認證，衍生出上千個一線員工自主發起的自動化創新，成為亞馬遜最強大的基層生產力引擎。
 
 ---
 

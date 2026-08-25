@@ -9,6 +9,8 @@
 
 企業制定 DX 戰略應遵循嚴謹的閉環流程：
 
+> **圖 02.1：轉型戰略閉環規劃五步圖 (The 5-Step Strategy Framework)**
+
 ```mermaid
 flowchart LR
     S1["1. 現狀診斷<br/>(Maturity Assessment)"] --> S2["2. 願景與目標<br/>(Vision & OKRs)"]
@@ -18,17 +20,20 @@ flowchart LR
     S5 -.->|"持續迭代反饋"| S1
 ```
 
-1. **現狀診斷 (Where are we now?)**：評估現有技術債（Technical Debt）、數據就緒度（Data Readiness）、文化阻力與營運瓶頸。
-2. **確立願景 (Where do we want to go?)**：定義轉型北極星指標（North Star Metric）與 3 年長期目標。
-3. **場景優先級篩選 (Which bets should we make?)**：透過「價值 vs 複雜度矩陣」挑選出高回報、快速落地的 Quick Wins。
-4. **藍圖設計 (How do we get there?)**：規劃技術架構演進、人才招募培訓、專案階段里程碑（Milestones）。
-5. **價值實現 (Are we creating real impact?)**：設立營收增長、成本優化、客戶滿意度等量化指標與治理常規。
+> **📌 實戰個案剖析 (Case Study: 星展銀行 DBS 戰略五步閉環)**：
+> 1. **診斷**：發現自身是亞洲排隊最長、客訴最多的傳統銀行。
+> 2. **願景**：提出 "Make Banking Joyful"（讓銀行服務隱形化）。
+> 3. **場景**：優先將「買房貸款評估」、「乘車扣款」等高頻生活場景 API 化。
+> 4. **藍圖**：全面上雲、打造 1,000+ 開放 API 與敏捷組織。
+> 5. **價值**：連續數年榮獲「全球最佳銀行」，數位用戶 ROE 達到傳統用戶的 2.2 倍。
 
 ---
 
 ## 📈 2. 數位成熟度評估模型 (Digital Maturity Model - DMM)
 
 企業的數位能力通常劃分為五個階段。了解自身處於哪一階段，才能制定務實的升級路徑：
+
+> **圖 02.2：數位成熟度五階段演進圖 (Digital Maturity Model - DMM)**
 
 ```mermaid
 graph LR
@@ -37,6 +42,9 @@ graph LR
     L3 --> L4["Level 4: 數據驅動 (Data-Driven)"]
     L4 --> L5["Level 5: 智慧進化 (Intelligent & Autonomous)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 沃爾瑪 Walmart 的成熟度越級)**：
+> 沃爾瑪曾停留在 Level 3（強大的 ERP 但線上線下割裂），面對亞馬遜電商威脅，沃爾瑪建立全通路數據湖（升至 Level 4 數據驅動），進而部署 AI 動態定價與倉庫自走機器人（邁向 Level 5 自主進化），成功將線上電商年營收拉升至 1,000 億美元。
 
 | 成熟度階段 | 特徵描述 | 典型痛點 | 升級關鍵動作 |
 | :--- | :--- | :--- | :--- |
@@ -89,6 +97,8 @@ graph LR
 
 傳統財務 ROI 計算容易忽略數位化帶來的長期敏捷性與戰略期權價值。建議採用「三維度價值矩陣」：
 
+> **圖 02.3：數位轉型三維度價值實現矩陣 (DX Value Realization Matrix)**
+
 ```mermaid
 graph TD
     VAL[數位轉型價值矩陣]
@@ -100,6 +110,12 @@ graph TD
     V2 --> V21["- NPS / CSAT 滿意度提升<br/>- 客戶流失率 (Churn Rate) 下降<br/>- LTV (顧客終生價值) 增長"]
     V3 --> V31["- 新功能 Time-to-Market 週期<br/>- 數據/AI 自助使用普及率<br/>- 系統停機時間與恢復速度 (MTTR)"]
 ```
+
+> **📌 實戰個案剖析 (Case Study: 某跨國連鎖零售的 OKR 價值轉化)**：
+> 該零售集團投資 2,000 萬導入智慧會員與補貨系統：
+> - **財務回報 (Hard ROI)**：全美門市庫存報廢率下降 28%，省下 1.2 億成本。
+> - **客戶價值 (Customer Impact)**：會員專屬優惠券兌換率由 3% 升至 19%，NPS 評分提升 15 分。
+> - **組織敏捷 (Strategic Agility)**：新促銷活動上線週期從 4 週縮短至 24 小時。
 
 ### 範例：轉型專案 OKR 設定
 - **目標 (Objective)**：重構客戶服務流程，打造業界領先的 AI 智慧服務體系。

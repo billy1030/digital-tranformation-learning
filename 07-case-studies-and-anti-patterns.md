@@ -49,6 +49,8 @@
 
 ## 🚫 3. 企業十大轉型反模式避坑清單 (Top 10 DX Anti-Patterns)
 
+> **圖 07.1：企業數位轉型十大致命反模式避坑全景圖 (Top 10 DX Anti-Patterns)**
+
 ```mermaid
 graph TD
     subgraph 🚨 十大致命反模式
@@ -64,6 +66,10 @@ graph TD
         A10["10. 宣稱終點線 (Declaring Early Victory)"]
     end
 ```
+
+> **📌 實戰個案剖析 (Case Study: 柯達 Kodak 與 GE Digital 的血淚教訓)**：
+> - **Kodak 觸犯反模式 10 (宣稱終點線)**：明明發明了全球第一台數位相機，卻因眷戀傳統膠卷暴利而延誤商用化，最終破產。
+> - **GE Digital 觸犯反模式 1 & 3 (炫技與推倒重來)**：斥資 40 億美元打造宏大的 Predix 工業雲平台，脫離了一線工廠實際需求，最終慘遭分拆甩賣。
 
 | 反模式名稱 | 具體症狀表現 | 正確解法 (Remediation) |
 | :--- | :--- | :--- |

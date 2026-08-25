@@ -9,6 +9,8 @@
 
 傳統企業 IT 架構與現代數位架構的根本差異：
 
+> **圖 03.1：傳統 Legacy 架構 vs 現代雲原生架構對比圖 (Architecture Modernization Evolution)**
+
 ```mermaid
 graph TD
     subgraph 傳統 Legacy 架構 (僵化、脆弱)
@@ -26,6 +28,9 @@ graph TD
     end
 ```
 
+> **📌 實戰個案剖析 (Case Study: Netflix 雲原生與微服務架構轉型)**：
+> 2008 年 Netflix 曾因本地資料庫損壞導致服務中斷 3 天。隨後痛定思痛，耗時 7 年全面遷移至 AWS 雲端，拆分為數百個微服務，並自研 Chaos Monkey（混沌工程）隨機模擬伺服器斷線以驗證高可用性。如今即使單一 AWS 機房故障，用戶追劇完全無感。
+
 ### 關鍵演進路徑：
 1. **Infrastructure (基礎設施)**：從 On-Premises 實體機房 ➔ IaaS (雲主機) ➔ PaaS / Serverless (雲原生託管與無伺服器架構)。
 2. **Architecture Pattern (架構模式)**：從緊耦合的 Monolithic 架構 ➔ 鬆耦合的 Microservices 與 Event-Driven Architecture (EDA)。
@@ -36,6 +41,8 @@ graph TD
 ## 🔌 2. API 經濟與組合式企業 (API Economy & Composable Enterprise)
 
 現代數位企業將自身的核心能力「API 化」，對內實現敏捷組裝，對外實現生態共創：
+
+> **圖 03.2：API 優先與多端場景組裝架構圖 (API Economy & Composability)**
 
 ```mermaid
 flowchart LR
@@ -59,6 +66,9 @@ flowchart LR
     A4 --> B1 & B4
 ```
 
+> **📌 實戰個案剖析 (Case Study: Stripe 支付帝國的 API 優先戰略)**：
+> Stripe 僅用「7 行 JavaScript 代碼」的支付 API，徹底顛覆了傳統銀行繁複的刷卡機申請手續。任何電商或開發者 5 分鐘內即可接入全球支付能力，迅速成長為估值數百億美元的 API 巨頭。
+
 ### API 優先戰略 (API-First Strategy) 四大原則：
 1. **Design Before Code (契約優先設計)**：使用 OpenAPI / Swagger 規範先定義 API 契約，讓前端、後端與合作夥伴並行開發。
 2. **Loose Coupling (鬆散耦合)**：底層資料庫或商業邏輯變更不應破壞對外的 API 接口。
@@ -71,6 +81,8 @@ flowchart LR
 
 數據是 AI 與數位轉型的燃料。企業數據架構經歷了四個世代的演化：
 
+> **圖 03.3：數據架構四世代演進圖 (Evolution to Data Mesh)**
+
 ```mermaid
 flowchart TD
     G1["第一代: 傳統關聯式資料庫 (RDBMS/OLTP)<br/>- 專注業務事務，缺乏全域報表分析能力"]
@@ -80,6 +92,9 @@ flowchart TD
 
     G1 --> G2 --> G3 --> G4
 ```
+
+> **📌 實戰個案剖析 (Case Study: 歐洲電商巨頭 Zalando 導入 Data Mesh)**：
+> Zalando 過去集中式數據團隊每天要應付數百個部門的改報表需求，不堪重負。轉向 Data Mesh 後，將數據所有權交給行銷、物流、商品等各業務團隊，各自發布高質量的 Data Product，跨部門數據取用時間從 3 週縮短至 5 分鐘。
 
 ### 現代數據網格 (Data Mesh) 的四大核心原則：
 1. **Domain-Oriented Ownership (領域導向的數據所有權)**：不再由單一集中式數據團隊負責所有清洗，而是由各業務領域團隊（行銷、供應鏈、財務）負責自身數據質量。
