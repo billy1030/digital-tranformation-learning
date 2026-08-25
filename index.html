@@ -565,8 +565,8 @@
                 圖 ${figureNumber}
               </span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
-              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="按住滑鼠左鍵可任意上/下/左/右平移拖動，雙擊可復位">
-                <i data-lucide="hand" class="w-3 h-3 mr-1 text-sky-500"></i> 按住手掌任意平移
+              <span class="hidden sm:inline-flex items-center text-[11px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/60 dark:border-slate-700/60" title="滾輪可放大縮小 • 按住滑鼠可 4 向拖曳 • 雙擊復位">
+                <i data-lucide="mouse" class="w-3 h-3 mr-1 text-sky-500"></i> 滾輪縮放 • 手掌拖曳
               </span>
             </div>
             <button type="button" onclick="openZoomModal('${diagramId}', '圖 ${figureNumber}')" 
@@ -602,18 +602,23 @@
       }
     }
 
-    // 🖐️ 全方位 4 向手掌抓取與拖曳平移 (Up, Down, Left, Right Pan Engine)
+    // 🖐️ 全方位 4 向手掌抓取與滾輪自由縮放 (Pan & Mouse Wheel Zoom Engine)
     function enableDragToScroll(container) {
       let isDragging = false;
       let startX = 0;
       let startY = 0;
       let currentX = 0;
       let currentY = 0;
+      let currentScale = 1.0;
 
       const target = container.querySelector('pre') || container;
       target.style.transition = 'transform 0.05s ease-out';
       target.style.willChange = 'transform';
       target.style.transformOrigin = 'center center';
+
+      function updateTransform() {
+        target.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
+      }
 
       container.addEventListener('mousedown', (e) => {
         // 忽略點擊按鈕等行為
@@ -637,15 +642,26 @@
         e.preventDefault();
         currentX = e.clientX - startX;
         currentY = e.clientY - startY;
-        target.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        updateTransform();
       });
+
+      // 🎡 滑鼠滾輪縮放 (Mouse Wheel Zoom)
+      container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomDelta = e.deltaY < 0 ? 1.1 : 0.9;
+        currentScale = Math.max(0.4, Math.min(3.5, currentScale * zoomDelta));
+        target.style.transition = 'transform 0.1s ease-out';
+        updateTransform();
+        setTimeout(() => target.style.transition = 'transform 0.05s ease-out', 100);
+      }, { passive: false });
 
       // 雙擊復位
       container.addEventListener('dblclick', () => {
         currentX = 0;
         currentY = 0;
+        currentScale = 1.0;
         target.style.transition = 'transform 0.25s ease-out';
-        target.style.transform = `translate(0px, 0px)`;
+        updateTransform();
         setTimeout(() => target.style.transition = 'transform 0.05s ease-out', 250);
       });
     }
@@ -685,6 +701,14 @@
         modalPanY = e.clientY - modalStartY;
         updateModalScale();
       });
+
+      // 🎡 放大檢視器中的滑鼠滾輪縮放 (Modal Wheel Zoom)
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomDelta = e.deltaY < 0 ? 1.15 : 0.85;
+        currentScale = Math.max(0.4, Math.min(4.0, currentScale * zoomDelta));
+        updateModalScale();
+      }, { passive: false });
 
       canvas.addEventListener('dblclick', () => {
         resetModalZoom();
