@@ -49,22 +49,37 @@
 
 ## 🚫 3. 企業十大轉型反模式避坑清單 (Top 10 DX Anti-Patterns)
 
-> **圖 07.1：企業數位轉型十大致命反模式避坑全景圖 (Top 10 DX Anti-Patterns)**
+> **圖 07.1：企業數位轉型十大致命反模式避坑全景圖 (Top 10 DX Anti-Patterns Framework)**
 
 ```mermaid
-graph TD
-    subgraph S1["十大致命反模式 (Top 10 Anti-Patterns)"]
-        A1["1. 科技炫技主義 (Tech for Tech's Sake)"]
-        A2["2. 概念驗證黑洞 (PoC Purgatory)"]
-        A3["3. 巨石系統推倒重來 (Big Bang Rewrite)"]
-        A4["4. 孤立的轉型外包 (Outsourced Soul)"]
-        A5["5. 數據垃圾場 (Garbage In, AI Chaos Out)"]
-        A6["6. 缺乏高層擔當 (Lip-Service Sponsorship)"]
-        A7["7. 忽略一線操作者 (Ignoring Frontline Realities)"]
-        A8["8. 瀑布式偽敏捷 (Water-Scrum-Fall)"]
-        A9["9. 忽視資安與合規 (Security as an Afterthought)"]
-        A10["10. 宣稱終點線 (Declaring Early Victory)"]
+flowchart TD
+    ROOT["🚨 企業數位轉型十大致命反模式 (Anti-Patterns)"]
+
+    subgraph P1["🎯 戰略與商業維度 (Strategy & Value)"]
+        direction TB
+        A1["1. 科技炫技主義 (Tech for Tech's Sake)<br/>• 脫離業務痛點，為 AI 而 AI"]
+        A2["2. 概念驗證黑洞 (PoC Purgatory)<br/>• 停留在 Demo 階段，永遠無法上線"]
+        A6["6. 缺乏高層擔當 (Lip-Service Sponsorship)<br/>• 口頭支持但拒絕調整組織 KPI"]
+        A10["10. 宣稱終點線 (Declaring Early Victory)<br/>• 誤把系統上線當作轉型成功"]
     end
+
+    subgraph P2["👥 組織與文化維度 (People & Culture)"]
+        direction TB
+        A4["4. 轉型靈魂外包 (Outsourced Soul)<br/>• 核心業務與產品思維完全依賴顧問"]
+        A7["7. 忽略一線操作者 (Ignoring Frontline)<br/>• 總部閉門造車，一線員工被迫抗拒"]
+        A8["8. 瀑布式偽敏捷 (Water-Scrum-Fall)<br/>• 披著敏捷外皮的長週期官僚審批"]
+    end
+
+    subgraph P3["⚙️ 架構與數據底座維度 (Tech & Data)"]
+        direction TB
+        A3["3. 巨石系統推倒重來 (Big Bang Rewrite)<br/>• 試圖一次重寫 15 年舊系統導致崩潰"]
+        A5["5. 數據垃圾場 (Garbage In, Chaos Out)<br/>• 未經數據治理直接硬套 AI 模型"]
+        A9["9. 忽視資安與合規 (Security Afterthought)<br/>• 上線後爆發數據外洩遭監管重罰"]
+    end
+
+    ROOT --> P1
+    ROOT --> P2
+    ROOT --> P3
 ```
 
 > **📌 實戰個案剖析 (Case Study: 柯達 Kodak 與 GE Digital 的血淚教訓)**：
