@@ -100,34 +100,43 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph Q1["第一象限: 立即推動 (No-Brainers)"]
-        A1["企業內部智能知識庫 RAG"]
-        A2["AI 輔助編程與自動測試生成"]
+    subgraph TOP["業務影響力：高 (High Business Impact)"]
+        direction LR
+        subgraph Q1["🚀 第一象限：立即推動 (No-Brainers)<br/>【高業務價值 • 高技術可行性】"]
+            direction TB
+            A1["📚 企業內部智能知識庫 RAG<br/>• 內部規章/合約秒級查詢"]
+            A2["💻 AI 輔助編程與自動測試<br/>• 研發效率提升 40%~60%"]
+        end
+
+        subgraph Q2["💎 第二象限：戰略孵化 (Strategic Bets)<br/>【高業務價值 • 低技術可行性/需攻堅】"]
+            direction TB
+            B1["🤖 端到端自動財務關帳 Agent<br/>• 需嚴密人機協同 (Human-in-the-loop)"]
+            B2["📈 核心供應鏈多模態需求預測<br/>• 需多源跨國時序數據整合"]
+        end
     end
 
-    subgraph Q2["第二象限: 戰略孵化 (Strategic)"]
-        B1["全自動端到端財務關帳 Agent"]
-        B2["核心供應鏈多模態需求預測"]
-    end
+    subgraph BTM["業務影響力：低 (Low Business Impact)"]
+        direction LR
+        subgraph Q3["☕ 第三象限：低成本自動化 (Easy Efficiency)<br/>【低業務價值 • 高技術可行性】"]
+            direction TB
+            C1["✍️ AI 生成社群行銷草稿<br/>• 行銷人員一鍵潤飾發布"]
+            C2["📝 內部會議記錄自動摘要<br/>• 節省每日整理工時"]
+        end
 
-    subgraph Q3["第三象限: 低成本自動化 (Easy Efficiency)"]
-        C1["AI 生成社群行銷草稿"]
-        C2["內部會議記錄自動摘要"]
-    end
-
-    subgraph Q4["第四象限: 嚴格避免 (Discard)"]
-        D1["毫無數據基礎的市場大預測"]
-        D2["脫離業務場景的通用大模型自研"]
+        subgraph Q4["🚫 第四象限：嚴格避免 (Discard / Pits)<br/>【低業務價值 • 低技術可行性】"]
+            direction TB
+            D1["🔮 毫無數據基礎的市場大預測<br/>• 典型 PoC 黑洞玩具專案"]
+            D2["🧱 脫離業務場景的通用大模型自研<br/>• 耗資數千萬且無法產生 ROI"]
+        end
     end
 ```
 
-> **📌 實戰個案剖析 (Case Study: 某跨國物流集團的專案四象限落地)**：
-> 該集團果斷叫停了「毫無數據基礎的無人卡車大預測」玩具項目（象限 3），集中火力在 3 週內上線「報關單多模態 RAG 解析」（象限 1），通關文件處理效率提升 8 倍，當季為集團節省 1,500 萬報關延遲罰款。
-
-1. **Data Readiness (數據就緒度)**：是否有高質量的標準化資料作為 Ground Truth？
-2. **Tolerance for Error (容錯率評估)**：業務場景能否容忍微小幻覺？（行銷創意容錯率高；財務算帳容錯率極低，需加入 Human-in-the-loop 人機協同審批）。
-3. **Integration Simplicity (系統整合難度)**：是否已具備開放 API 供 AI Agent 調用？
-4. **Clear ROI Metric (明確量化指標)**：該場景是以「節省工時」還是「促進營收」為衡量標準？
+| 專案四象限類型 | 業務價值 (Impact) | 技術可行性 (Feasibility) | 落地決策建議 (Decision Playbook) | 推薦交付週期 |
+| :--- | :--- | :--- | :--- | :--- |
+| **🚀 第一象限：立即推動 (No-Brainers)** | **高 (High)** | **高 (High)** | **立即全力立項**，3~4 週內上線產生實際 ROI，為團隊贏取預算信任 | **2 ~ 4 週** |
+| **💎 第二象限：戰略孵化 (Strategic Bets)** | **高 (High)** | **低 (攻堅中)** | **分階段拆解架構**，先補齊數據底座與 API，以 2 週 Sprint 敏捷推進 | **2 ~ 3 個月** |
+| **☕ 第三象限：低成本自動化 (Easy Efficiency)** | **低 (Low)** | **高 (High)** | **非核心優先級**，鼓勵員工自行使用現成 SaaS 工具提效，不投入專門工程資源 | **1 ~ 2 週** |
+| **🚫 第四象限：嚴格避免 (Discard / Pits)** | **低 (Low)** | **低 (Low)** | **果斷拒絕或叫停**，切忌盲目追求炫技或陷入「概念驗證黑洞」 | **不予立項** |
 
 ---
 
