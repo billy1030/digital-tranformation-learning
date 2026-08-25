@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>數位轉型與 AI 提速全景互動知識庫</title>
+  <!-- Google Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked.js for Markdown Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Mermaid.js for Diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- 📦 Pre-bundled Offline Markdown Dataset (完全免 Fetch，100% 秒開穩定) -->
+  <script src="lessons-bundle.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Markdown Prose Styling */
+    .markdown-body {
+      color: inherit;
+    }
+    .markdown-body h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      color: #0369a1;
+      line-height: 1.25;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(2, 132, 199, 0.2);
+    }
+    .dark .markdown-body h1 {
+      color: #38bdf8;
+      border-bottom-color: rgba(56, 189, 248, 0.2);
+    }
+    .markdown-body h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .markdown-body h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .markdown-body p {
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
+    .markdown-body blockquote {
+      border-left: 4px solid #0284c7;
+      padding: 0.85rem 1.25rem;
+      margin: 1.25rem 0;
+      background: rgba(2, 132, 199, 0.06);
+      border-radius: 0 0.75rem 0.75rem 0;
+      font-style: normal;
+    }
+    .dark .markdown-body blockquote {
+      border-left-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .markdown-body table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1.5rem 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      font-size: 0.9rem;
+    }
+    .dark .markdown-body table {
+      border-color: rgba(51, 65, 85, 0.8);
+    }
+    .markdown-body th {
+      background: #f8fafc;
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+    .dark .markdown-body th {
+      background: #0f172a;
+      border-color: rgba(51, 65, 85, 0.8);
+    }
+    .markdown-body td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    }
+    .dark .markdown-body td {
+      border-color: rgba(51, 65, 85, 0.5);
+    }
+    .markdown-body tr:last-child td {
+      border-bottom: none;
+    }
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
+    .markdown-body ul {
+      list-style-type: disc;
+    }
+    .markdown-body ol {
+      list-style-type: decimal;
+    }
+    .markdown-body li {
+      margin-bottom: 0.35rem;
+    }
+    .markdown-body code:not(pre code) {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.35rem;
+      background: rgba(148, 163, 184, 0.18);
+      color: #0284c7;
+    }
+    .dark .markdown-body code:not(pre code) {
+      color: #38bdf8;
+      background: rgba(148, 163, 184, 0.2);
+    }
+
+    /* 正確正常的 Mermaid 容器樣式 */
+    .mermaid-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+    .dark .mermaid-wrapper {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(51, 65, 85, 0.8);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+    .mermaid-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+    .mermaid-container svg {
+      display: block;
+      margin: 0 auto;
+      height: auto !important;
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-nav {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+    }
+
+    /* Modern Custom Scrollbar for Sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.4);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(2, 132, 199, 0.6);
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(71, 85, 105, 0.5);
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.6);
+    }
+
+    /* Floating Navigation Pill */
+    .floating-nav-pill {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+    .dark .floating-nav-pill {
+      background: rgba(15, 23, 42, 0.92);
+      border-color: rgba(51, 65, 85, 0.8);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 pb-24">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 glass-nav border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+          <i data-lucide="layers" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-tight">DX & AI Acceleration Hub</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">數位轉型與 AI 智能提速全景互動知識庫</p>
+        </div>
+      </div>
+      
+      <!-- Right Action Items -->
+      <div class="flex items-center space-x-3">
+        <button id="themeToggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="切換暗黑/明亮模式">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+    <!-- 📌 Sidebar Navigation (獨立固定與捲動) -->
+    <aside class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-20 z-20">
+      <div class="glass-nav rounded-2xl p-4 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar flex flex-col">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-2 flex-shrink-0">課程模組目錄</h2>
+        <nav class="space-y-1.5 flex-1" id="lessonList">
+          <!-- Populated by JavaScript -->
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content Viewer (獨立捲動) -->
+    <main class="lg:col-span-8 xl:col-span-9 min-w-0">
+      <div class="glass-nav rounded-2xl p-6 sm:p-8 shadow-sm border min-h-[700px] flex flex-col justify-between">
+        
+        <!-- Markdown Body -->
+        <article id="contentArea" class="markdown-body">
+          <div class="flex items-center justify-center py-24 text-slate-400">
+            <i data-lucide="loader-2" class="w-8 h-8 animate-spin mr-3 text-sky-500"></i>
+            載入課程內容中...
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- 🚀 Floating Bottom-Right Navigation Bar (右下角懸浮導航欄) -->
+  <div class="fixed bottom-6 right-6 z-50 floating-nav-pill rounded-2xl p-2 px-3 sm:px-4 flex items-center space-x-2 sm:space-x-3 transition-all shadow-xl">
+    <button id="floatingPrevBtn" onclick="navigateLesson(-1)" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-sky-600 hover:bg-sky-500 text-white transition flex items-center disabled:opacity-30 disabled:pointer-events-none shadow-md shadow-sky-600/30 cursor-pointer" title="上一單元">
+      <i data-lucide="arrow-left" class="w-4 h-4 sm:mr-1.5"></i> <span class="hidden sm:inline">上一單元</span>
+    </button>
+    
+    <div class="flex flex-col items-center justify-center px-1">
+      <span id="floatingLessonBadge" class="text-[11px] sm:text-xs font-mono font-bold text-sky-600 dark:text-sky-400">1/11</span>
+    </div>
+
+    <button id="floatingNextBtn" onclick="navigateLesson(1)" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-sky-600 hover:bg-sky-500 text-white transition flex items-center disabled:opacity-30 disabled:pointer-events-none shadow-md shadow-sky-600/30 cursor-pointer" title="下一單元">
+      <span class="hidden sm:inline">下一單元</span> <i data-lucide="arrow-right" class="w-4 h-4 sm:ml-1.5"></i>
+    </button>
+
+    <div class="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
+
+    <!-- Quick Scroll to Top -->
+    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition flex items-center cursor-pointer" title="回到頂部">
+      <i data-lucide="arrow-up" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <footer class="mt-auto py-4 border-t glass-nav text-center text-xs text-slate-500 dark:text-slate-400">
+    Digital Transformation & AI Acceleration Learning Series • Antigravity Interactive Knowledge Hub
+  </footer>
+
+  <!-- App Script -->
+  <script>
+    // ⚡ 動態讀取自動生成的課程目錄清單 (Dynamic Manifest)
+    const LESSONS = window.LESSONS_MANIFEST || [
+      { id: '00', file: '00-curriculum-overview.md', title: '00: 課程總綱與學習地圖', icon: 'map', level: '全員' },
+      { id: '01', file: '01-what-is-digital-transformation.md', title: '01: 基礎篇 — 什麼是數位轉型？', icon: 'git-branch', level: '初階' }
+    ];
+
+    let currentIdx = 0;
+
+    // Mermaid 原生初始化 (不強制縮放，保持清晰字體與原始大小)
+    function setupMermaid() {
+      const isDark = document.documentElement.classList.contains('dark');
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? 'dark' : 'default',
+        securityLevel: 'loose',
+        fontFamily: '"Plus Jakarta Sans", "Noto Sans TC", sans-serif',
+        fontSize: 15,
+        flowchart: {
+          useMaxWidth: false,
+          htmlLabels: true,
+          curve: 'basis'
+        }
+      });
+    }
+    setupMermaid();
+
+    // Render Navigation Items
+    function renderNav() {
+      const nav = document.getElementById('lessonList');
+      nav.innerHTML = LESSONS.map((lesson, idx) => `
+        <button onclick="loadLesson(${idx})" id="nav-item-${idx}" 
+          class="w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between transition ${idx === currentIdx ? 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300 font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
+          <span class="flex items-center truncate mr-2">
+            <i data-lucide="${lesson.icon}" class="w-4 h-4 mr-2 flex-shrink-0 text-sky-500"></i>
+            <span class="truncate">${lesson.title}</span>
+          </span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-200/60 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex-shrink-0">${lesson.level}</span>
+        </button>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // Load and Render Markdown Lesson (支援本地 Bundle + Fallback Fetch)
+    async function loadLesson(index) {
+      currentIdx = index;
+      const lesson = LESSONS[index];
+      renderNav();
+
+      const contentArea = document.getElementById('contentArea');
+      let markdownText = '';
+
+      // 優先使用本地預打包 Bundle 數據 (零延遲、絕對唔會報 HTTP 錯誤)
+      if (window.LESSONS_DATA && window.LESSONS_DATA[lesson.file]) {
+        markdownText = window.LESSONS_DATA[lesson.file];
+      } else {
+        try {
+          const response = await fetch(`${lesson.file}?t=${Date.now()}`);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          markdownText = await response.text();
+        } catch (err) {
+          contentArea.innerHTML = `
+            <div class="p-6 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300">
+              <h3 class="font-bold text-base mb-2 flex items-center"><i data-lucide="alert-triangle" class="w-5 h-5 mr-2"></i>載入失敗</h3>
+              <p class="text-sm">無法取得檔案: <code>${lesson.file}</code>。</p>
+            </div>
+          `;
+          lucide.createIcons();
+          return;
+        }
+      }
+
+      // Intercept and Replace Local File Links to app navigation
+      markdownText = markdownText.replace(/\[([^\]]+)\]\(file:\/\/\/[^)]*?(\d{2}(?:\.\d)?-[^)]+?\.md)\)/g, (match, label, filename) => {
+        const targetIdx = LESSONS.findIndex(l => l.file === filename);
+        if (targetIdx !== -1) {
+          return `<a href="javascript:void(0)" onclick="loadLesson(${targetIdx})" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline">${label}</a>`;
+        }
+        return match;
+      });
+
+      // Parse Markdown with Marked
+      const html = marked.parse(markdownText);
+      contentArea.innerHTML = html;
+
+      // Process Mermaid Diagrams
+      await processMermaidDiagrams();
+
+      // Update Floating Page Controls
+      document.getElementById('floatingPrevBtn').disabled = currentIdx === 0;
+      document.getElementById('floatingNextBtn').disabled = currentIdx === LESSONS.length - 1;
+      document.getElementById('floatingLessonBadge').innerText = `${currentIdx + 1}/${LESSONS.length}`;
+      
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Process & Render Mermaid Elements cleanly
+    let diagramCounter = 0;
+    async function processMermaidDiagrams() {
+      const codeBlocks = document.querySelectorAll('#contentArea pre code');
+      let localChartIdx = 0;
+
+      for (const block of codeBlocks) {
+        const text = block.textContent.trim();
+        if (block.classList.contains('language-mermaid') || 
+            text.startsWith('flowchart') || 
+            text.startsWith('graph') || 
+            text.startsWith('quadrantChart') || 
+            text.startsWith('journey') || 
+            text.startsWith('mindmap') || 
+            text.startsWith('classDiagram')) {
+          
+          diagramCounter++;
+          localChartIdx++;
+          const currentLesson = LESSONS[currentIdx];
+          const figureNumber = `${currentLesson.id}.${localChartIdx}`;
+          const pre = block.parentElement;
+
+          // Create Outer Wrapper
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mermaid-wrapper';
+          
+          // Header Bar on top
+          const headerBar = document.createElement('div');
+          headerBar.className = 'flex items-center justify-between mb-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-2';
+          headerBar.innerHTML = `
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 rounded-md text-xs font-mono font-bold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                圖 ${figureNumber}
+              </span>
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">架構圖解</span>
+            </div>
+          `;
+
+          // Mermaid Container (自然寬度)
+          const container = document.createElement('div');
+          container.className = 'mermaid-container';
+
+          const mermaidDiv = document.createElement('pre');
+          mermaidDiv.className = 'mermaid';
+          mermaidDiv.textContent = text;
+
+          container.appendChild(mermaidDiv);
+          wrapper.appendChild(headerBar);
+          wrapper.appendChild(container);
+          pre.replaceWith(wrapper);
+        }
+      }
+      try {
+        await mermaid.run();
+      } catch (e) {
+        console.warn('Mermaid rendering warning:', e);
+      }
+    }
+
+    function navigateLesson(offset) {
+      const newIdx = currentIdx + offset;
+      if (newIdx >= 0 && newIdx < LESSONS.length) {
+        loadLesson(newIdx);
+      }
+    }
+
+    // Theme Toggle Handler
+    const themeToggleBtn = document.getElementById('themeToggle');
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      setupMermaid();
+      loadLesson(currentIdx);
+    });
+
+    // Initialize Theme
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Initial Load
+    renderNav();
+    loadLesson(0);
+  </script>
+</body>
+</html>
